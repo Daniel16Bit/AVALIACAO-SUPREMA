@@ -1,0 +1,17 @@
+@startuml Estados_Resultado
+skinparam shadowing false
+title Ciclo de vida de um Resultado (aluno × avaliação)
+
+[*] --> RASCUNHO : primeira nota registrada
+RASCUNHO --> RASCUNHO : registrar ou editar nota\n[professor com vínculo vigente]
+RASCUNHO --> PUBLICADO : publicar\n[resultado completo (H05)]
+
+RASCUNHO : visível só para professores da disciplina
+PUBLICADO : visível para o aluno\nnotas imutáveis (RN07)
+
+note right of PUBLICADO
+  Não há transição de volta a RASCUNHO.
+  Retificação após publicação depende
+  de regra acadêmica (RP06).
+end note
+@enduml

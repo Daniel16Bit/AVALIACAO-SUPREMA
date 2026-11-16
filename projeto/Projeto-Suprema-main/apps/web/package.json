@@ -1,0 +1,9 @@
+{
+  "name": "@suprema/web",
+  "version": "11.9.0",
+  "private": true,
+  "main": "server.js",
+  "scripts": {
+    "start": "node --env-file-if-exists=../../.env server.js"
+  }
+}

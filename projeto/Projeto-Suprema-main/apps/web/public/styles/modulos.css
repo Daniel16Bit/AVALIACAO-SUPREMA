@@ -1,0 +1,180 @@
+/* Componentes comuns das telas dos modulos novos (OSCE, Avaliacao Docente, Comprovantes, Articulacao).
+   O elemento onde o modulo desenha tem a classe .mod-root. Paineis, botoes, tabelas e selos
+   continuam sendo os do sistema (.panel, .btn, .admin-table, .state-badge). */
+.mod-root .mod-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+.mod-root .mod-heading h1 {
+  margin: 0;
+}
+.mod-root .mod-heading p {
+  margin: 6px 0 0;
+}
+.mod-root .mod-actions,
+.mod-root .mod-row-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+.mod-root .mod-row-actions {
+  margin-top: 12px;
+}
+.mod-root td.mod-row-actions {
+  margin: 0;
+}
+.mod-root .mod-center {
+  justify-content: center;
+}
+.mod-root a.btn {
+  text-decoration: none;
+}
+
+.mod-root .admin-panel label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13px;
+  color: #344054;
+  margin-bottom: 12px;
+}
+.mod-root .admin-panel input:not([type='checkbox']):not([type='radio']),
+.mod-root .admin-panel select {
+  border: 1px solid #d0d5dd;
+  border-radius: 8px;
+  padding: 10px;
+  min-height: 40px;
+  background: #fff;
+  color: #182230;
+  font: inherit;
+}
+.mod-root .admin-panel input:disabled,
+.mod-root .admin-panel select:disabled {
+  background: #f2f5f9;
+  color: #52657a;
+}
+.mod-root .admin-form label {
+  margin-bottom: 0;
+}
+.mod-root label.mod-check {
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+}
+
+.mod-root .mod-questions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.mod-root .mod-question {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.mod-root .mod-question input {
+  flex: 1;
+  min-width: 0;
+}
+.mod-root .mod-question.key {
+  padding: 10px 12px;
+  border: 1px dashed #b9cde2;
+  border-radius: 8px;
+  background: #f5f9fe;
+  color: #234a70;
+  font-size: 13px;
+}
+.mod-root .mod-tag {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: #fdf3dc;
+  color: #7a5207;
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* Aviso que acompanha a tela: formula pendente, anonimato, resposta insuficiente. */
+.mod-root .mod-note {
+  border-left: 4px solid #dca54f;
+  background: #fffaf0;
+}
+.mod-root .mod-note h3 {
+  margin: 0 0 6px;
+  color: #7a5207;
+}
+.mod-root .mod-note p {
+  margin: 4px 0;
+  font-size: 13px;
+}
+.mod-root .mod-comment {
+  display: block;
+  margin-top: 3px;
+  color: #667085;
+  font-size: 11px;
+  font-weight: 400;
+}
+
+/* Formulario de resposta: uma pergunta por bloco, alvos grandes para toque. */
+.mod-root .mod-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-width: 760px;
+}
+.mod-root .mod-answer {
+  border: 1px solid #dfe8f1;
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 22px;
+  align-items: center;
+}
+.mod-root .mod-answer legend {
+  padding: 0 6px;
+  font-weight: 650;
+  color: #172c42;
+  font-size: 14px;
+}
+.mod-root .mod-answer label {
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  font-size: 15px;
+  min-height: 40px;
+}
+.mod-root .mod-answer input[type='radio'] {
+  width: 20px;
+  height: 20px;
+}
+.mod-root .mod-answer .mod-comment-field {
+  flex: 1 1 100%;
+  flex-direction: column;
+  align-items: stretch;
+  font-size: 13px;
+}
+.mod-root .form-error {
+  color: #b42318;
+  font-weight: 600;
+  margin: 0;
+}
+
+@media (max-width: 700px) {
+  .mod-root .mod-question {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .mod-root .mod-actions .btn {
+    flex: 1 1 auto;
+  }
+}

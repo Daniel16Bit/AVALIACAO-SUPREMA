@@ -1,0 +1,29 @@
+@startuml UC_Aluno
+skinparam shadowing false
+skinparam actorStyle awesome
+skinparam packageStyle rectangle
+title Casos de Uso do Aluno
+left to right direction
+
+actor "Aluno" as ALU
+
+rectangle "Avaliação Suprema" {
+  usecase "UC01 Autenticar-se" as UC01
+  usecase "UC12 Consultar\nDisciplinas Vinculadas" as UC12
+  usecase "UC23 Visualizar\nAvaliações Disponíveis" as UC23
+  usecase "UC24 Consultar\nResultados Publicados" as UC24
+  usecase "UC25 Acompanhar\nMeu Desempenho" as UC25
+}
+
+ALU --> UC01
+ALU --> UC12
+ALU --> UC23
+ALU --> UC24
+ALU --> UC25
+
+note right of UC24
+  Somente resultados PUBLICADOS
+  do próprio aluno (RN03, RN04).
+  Rascunhos nunca saem do servidor.
+end note
+@enduml

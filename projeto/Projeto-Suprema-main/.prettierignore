@@ -1,0 +1,8 @@
+# O formatador cuida só de JavaScript e CSS (veja os scripts "format" no package.json).
+# HTML, Markdown, JSON e YAML ficam como estão.
+node_modules/
+data/
+backups/
+tests/reports/
+coverage/
+archive/

@@ -1,0 +1,54 @@
+@startuml UC_Professor
+skinparam shadowing false
+skinparam actorStyle awesome
+skinparam packageStyle rectangle
+title Casos de Uso do Professor — destaque para A1 e A2
+left to right direction
+
+actor "Professor" as PROF
+
+rectangle "Avaliação Suprema" {
+  usecase "UC01 Autenticar-se" as UC01
+  usecase "UC12 Consultar\nDisciplinas Vinculadas" as UC12
+  usecase "UC13 Visualizar Alunos\nda Disciplina" as UC13
+
+  package "Ciclo da avaliação A1 / A2" #EEF3FA {
+    usecase "UC14 Selecionar\nAvaliação (A1 ou A2)" as UC14
+    usecase "UC18 Consultar Informações\nda Avaliação" as UC18
+    usecase "UC15 Lançar Notas\npor Questão" as UC15
+    usecase "UC17 Editar Notas\nNão Publicadas" as UC17
+    usecase "UC16 Salvar Lançamento\ncomo Rascunho" as UC16
+    usecase "UC19 Revisar\nLançamentos" as UC19
+    usecase "UC20 Publicar Resultados" as UC20
+  }
+
+  usecase "UC21 Consultar Notas e\nRelatórios de Desempenho" as UC21
+  usecase "UC22 Acompanhar\nDesempenho Acadêmico" as UC22
+}
+
+PROF --> UC01
+PROF --> UC12
+PROF --> UC13
+PROF --> UC18
+PROF --> UC15
+PROF --> UC17
+PROF --> UC20
+PROF --> UC21
+PROF --> UC22
+
+UC15 ..> UC14 : <<include>>
+UC17 ..> UC14 : <<include>>
+UC18 ..> UC14 : <<include>>
+UC20 ..> UC14 : <<include>>
+UC20 ..> UC19 : <<include>>
+UC16 .up.> UC15 : <<extend>>
+UC16 .up.> UC17 : <<extend>>
+
+legend right
+  <b>Regras aplicadas</b>
+  RN02 Acesso só a disciplinas com vínculo docente vigente
+  RN04 Rascunhos nunca ficam visíveis ao aluno
+  RN06 Notas editáveis apenas enquanto em RASCUNHO
+  RN07 Resultado publicado não pode ser alterado nem excluído
+endlegend
+@enduml

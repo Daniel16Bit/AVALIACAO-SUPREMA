@@ -1,0 +1,37 @@
+/* Modulo OSCE: so o que e proprio dele. Os componentes comuns das telas dos modulos
+   estao em /styles/modulos.css. */
+.mod-root .osce-legend {
+  margin: 0 0 14px;
+  padding-left: 22px;
+  font-size: 13px;
+  color: #344054;
+}
+.mod-root .osce-legend li {
+  margin: 4px 0;
+}
+.mod-root .osce-voided {
+  margin-top: 14px;
+  font-size: 13px;
+}
+.mod-root .osce-voided summary {
+  cursor: pointer;
+  color: #145a97;
+  font-weight: 650;
+  margin-bottom: 10px;
+}
+.mod-root .osce-folder {
+  padding: 12px 0;
+  border-top: 1px solid #edf1f6;
+}
+.mod-root .osce-folder:first-of-type {
+  border-top: 0;
+}
+.mod-root .osce-folder .btn small {
+  margin-left: 6px;
+  color: #667085;
+  font-weight: 500;
+}
+.mod-root .osce-average td {
+  font-weight: 650;
+  border-top: 2px solid #d0d7e2;
+}

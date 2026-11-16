@@ -1,0 +1,48 @@
+@startuml UC_Administrador
+skinparam shadowing false
+skinparam actorStyle awesome
+skinparam packageStyle rectangle
+title Casos de Uso do Administrador
+left to right direction
+
+actor "Administrador" as ADM
+
+rectangle "Avaliação Suprema" {
+  usecase "UC01 Autenticar-se" as UC01
+
+  usecase "UC02 Manter Usuários\n--\ncadastrar, consultar,\neditar, desativar" as UC02
+  usecase "UC03 Manter Professores" as UC03
+  usecase "UC04 Manter Alunos" as UC04
+  usecase "UC05 Redefinir Senha\nde Usuário" as UC05
+
+  usecase "UC06 Manter Cursos" as UC06
+  usecase "UC07 Manter Disciplinas" as UC07
+
+  usecase "UC08 Gerenciar\nVínculos Acadêmicos\n--\nconsultar, encerrar" as UC08
+  usecase "UC09 Vincular Professor\nà Disciplina" as UC09
+  usecase "UC10 Vincular Aluno\nà Disciplina" as UC10
+
+  usecase "UC11 Consultar Informações\nAdministrativas" as UC11
+}
+
+ADM --> UC01
+ADM --> UC02
+ADM --> UC06
+ADM --> UC07
+ADM --> UC08
+ADM --> UC11
+
+UC02 <|-- UC03
+UC02 <|-- UC04
+UC05 .> UC02 : <<extend>>\n[usuário selecionado]
+
+UC08 <|-- UC09
+UC08 <|-- UC10
+
+legend right
+  <b>Regras aplicadas</b>
+  RN09 Usuários e vínculos são desativados ou encerrados, nunca excluídos
+  RN10 Toda disciplina pertence a um curso (pendente: RP10)
+  RN11 Só professores recebem vínculo docente e só alunos vínculo discente
+endlegend
+@enduml

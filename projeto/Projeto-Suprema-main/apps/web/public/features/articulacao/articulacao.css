@@ -1,0 +1,255 @@
+/* Modulo Articulacao Interdisciplinar: so o que e proprio dele. Os componentes comuns das
+   telas dos modulos estao em /styles/modulos.css. */
+.mod-root .admin-panel textarea,
+.suprema-dialog textarea {
+  border: 1px solid #d0d5dd;
+  border-radius: 8px;
+  padding: 10px;
+  background: #fff;
+  color: #182230;
+  font: inherit;
+  width: 100%;
+  box-sizing: border-box;
+  resize: vertical;
+}
+
+/* Montagem: uma pergunta por linha, com secao, texto, tipo e justificativa. */
+.mod-root .art-questions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.mod-root .art-question {
+  display: grid;
+  grid-template-columns: 28px minmax(160px, 1.3fr) minmax(220px, 3fr) minmax(170px, 1.2fr) auto auto;
+  gap: 10px;
+  align-items: end;
+  padding: 10px 12px;
+  border: 1px solid #dfe8f1;
+  border-radius: 10px;
+  background: #fbfdff;
+}
+.mod-root .art-question label {
+  margin-bottom: 0;
+  min-width: 0;
+}
+.mod-root .art-question .mod-check {
+  align-self: center;
+  white-space: nowrap;
+}
+.mod-root .art-number {
+  align-self: center;
+  font-weight: 700;
+  color: #23496f;
+  text-align: center;
+}
+.mod-root .art-identity .art-wide {
+  grid-column: span 2;
+  flex: 2 1 360px;
+}
+
+.mod-root .art-lists {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.7fr) minmax(0, 1fr);
+  gap: 18px;
+}
+.mod-root .art-list h4 {
+  margin: 0 0 10px;
+  font-size: 14px;
+  color: #172c42;
+}
+.mod-root .art-list .mod-question {
+  margin-bottom: 8px;
+}
+.mod-root .art-list .mod-question select {
+  flex: 1 1 0;
+  min-width: 0;
+}
+.mod-root .art-list ul {
+  margin: 0;
+  padding-left: 20px;
+  font-size: 13px;
+  color: #344054;
+}
+
+/* Resultados: contagens brutas, sem calculo de desempenho. */
+.mod-root .art-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.mod-root .art-chips span {
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: #eef4fa;
+  color: #23496f;
+  font-size: 12px;
+  white-space: nowrap;
+}
+.mod-root .art-chips b {
+  margin-left: 4px;
+  color: #0f2f4f;
+}
+.mod-root .art-chips em {
+  margin-left: 4px;
+  font-style: normal;
+  color: #4a6785;
+}
+.mod-root .art-figures {
+  margin: 0 0 6px;
+  font-size: 13px;
+  color: #23496f;
+}
+.mod-root .art-figures b {
+  color: #0f2f4f;
+}
+.mod-root .art-period {
+  margin: 14px 0 6px;
+  font-size: 14px;
+  color: #0f2f4f;
+}
+.mod-root .art-grades {
+  display: grid;
+  grid-template-columns: repeat(11, minmax(26px, 1fr));
+  gap: 3px;
+  min-width: 330px;
+}
+.mod-root .art-grades span {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 3px 0;
+  border-radius: 6px;
+  background: #f2f5f9;
+  color: #7a8b9c;
+  font-size: 11px;
+}
+.mod-root .art-grades span.has {
+  background: #dcecfb;
+  color: #0f2f4f;
+}
+.mod-root .art-grades b {
+  font-weight: 600;
+  font-size: 10px;
+}
+.mod-root .art-grades i {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 13px;
+}
+.mod-root .art-details {
+  margin: 8px 0 0;
+  font-size: 13px;
+}
+.mod-root .art-details summary {
+  cursor: pointer;
+  color: #145a97;
+  font-weight: 650;
+}
+.mod-root .art-details ul {
+  margin: 8px 0 0;
+  padding-left: 20px;
+  color: #344054;
+}
+.mod-root .art-details li {
+  margin: 6px 0;
+}
+.mod-root .art-tutor {
+  padding: 10px 0;
+  border-top: 1px solid #e6edf4;
+  margin: 0;
+}
+.mod-root .art-tutor:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+.mod-root .art-tutor > .admin-scroll {
+  margin-top: 10px;
+}
+.mod-root .art-structure {
+  margin-top: 16px;
+}
+.mod-root .art-structure > summary {
+  margin-bottom: 12px;
+}
+.mod-root .art-withheld {
+  margin: 0;
+  padding: 12px 14px;
+  border-left: 4px solid #dca54f;
+  background: #fffaf0;
+  font-size: 13px;
+  color: #5b4410;
+}
+.mod-root .art-filter {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13px;
+  color: #344054;
+}
+.mod-root .art-filter select {
+  border: 1px solid #d0d5dd;
+  border-radius: 8px;
+  padding: 10px;
+  min-height: 40px;
+  background: #fff;
+  color: #182230;
+  font: inherit;
+  min-width: 260px;
+}
+.mod-root abbr[title] {
+  cursor: help;
+  text-decoration: underline dotted;
+}
+
+/* Formulario do aluno. */
+.mod-root .art-section {
+  margin: 10px 0 0;
+  padding-top: 10px;
+  border-top: 1px solid #e6edf4;
+  font-size: 15px;
+  color: #172c42;
+}
+.mod-root .art-section:first-child {
+  border-top: 0;
+  padding-top: 0;
+  margin-top: 0;
+}
+.mod-root .art-scale {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 14px;
+}
+.mod-root .mod-answer .art-select {
+  flex: 1 1 100%;
+}
+.mod-root .mod-answer .art-select select {
+  width: 100%;
+  max-width: 420px;
+}
+
+@media (max-width: 1100px) {
+  .mod-root .art-lists {
+    grid-template-columns: 1fr;
+  }
+  .mod-root .art-question {
+    grid-template-columns: 28px 1fr 1fr;
+  }
+  .mod-root .art-question .art-wide {
+    grid-column: 2 / -1;
+  }
+}
+@media (max-width: 700px) {
+  .mod-root .art-question {
+    grid-template-columns: 1fr;
+  }
+  .mod-root .art-question .art-wide {
+    grid-column: auto;
+  }
+  .mod-root .art-number {
+    text-align: left;
+  }
+  .mod-root .art-grades {
+    min-width: 0;
+  }
+}

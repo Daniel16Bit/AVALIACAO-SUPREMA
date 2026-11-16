@@ -1,0 +1,408 @@
+/* Read-only student analytics and consistent radar presentation. */
+.v117-intro {
+  margin: 0 0 14px;
+}
+.v117-intro h2 {
+  margin: 0 0 4px;
+  font-size: 27px;
+  color: #12386b;
+}
+.v117-intro p,
+.v117-muted,
+.v117-card > p {
+  color: #63758d;
+  font-size: 13px;
+}
+.v117-filters {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  padding: 14px;
+  background: #fff;
+  border: 1px solid #d9e5f3;
+  border-radius: 12px;
+  margin-bottom: 14px;
+}
+.v117-filters label {
+  font-size: 12px;
+  color: #34516f;
+  font-weight: 700;
+}
+.v117-filters select,
+.v117-radar-tools select {
+  display: block;
+  width: 100%;
+  margin-top: 5px;
+  padding: 9px;
+  border: 1px solid #ccdceb;
+  border-radius: 8px;
+  color: #173a64;
+  background: white;
+}
+.v117-metrics {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin: 0 0 14px;
+}
+.v117-metrics > div {
+  background: #edf5ff;
+  border: 1px solid #d5e6f9;
+  border-radius: 11px;
+  padding: 15px;
+}
+.v117-metrics > div:nth-child(3) {
+  background: #fff0f0;
+  border-color: #f5dddd;
+}
+.v117-metrics small,
+.v117-metrics strong {
+  display: block;
+}
+.v117-metrics small {
+  font-size: 12px;
+  color: #5d7190;
+}
+.v117-metrics strong {
+  font-size: 25px;
+  color: #153e76;
+  margin-top: 5px;
+}
+.v117-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+.v117-card {
+  background: white;
+  border: 1px solid #d9e5f3;
+  border-radius: 12px;
+  padding: 17px;
+  margin: 0 0 14px;
+  min-width: 0;
+}
+.v117-card h3 {
+  margin: 0 0 9px;
+  color: #15355f;
+  font-size: 17px;
+}
+.v117-discipline .v117-subject {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-top: 1px solid #edf1f6;
+  padding: 11px 0;
+  flex-wrap: wrap;
+}
+.v117-subject > div {
+  flex: 1;
+  min-width: 160px;
+}
+.v117-subject strong,
+.v117-subject small {
+  display: block;
+}
+.v117-subject small {
+  font-size: 11px;
+  color: #68819a;
+  margin-top: 3px;
+}
+.v117-subject > b {
+  color: #0d7663;
+  font-size: 20px;
+}
+.v117-subject.needs > b,
+.v117-attention {
+  color: #bf3238;
+}
+.v117-attention {
+  font-size: 12px;
+  width: 100%;
+  font-weight: 600;
+}
+.v117-bars {
+  min-height: 215px;
+  display: flex;
+  justify-content: space-around;
+  align-items: end;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 12px 2px;
+}
+.v117-baritem {
+  flex: 1;
+  min-width: 46px;
+  max-width: 85px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  color: #51647a;
+}
+.v117-baritem b {
+  font-size: 12px;
+}
+.v117-bararea {
+  height: 148px;
+  width: 100%;
+  background: linear-gradient(to top, #edf4fc, #fff);
+  border-bottom: 1px solid #c9d9e7;
+  display: flex;
+  align-items: end;
+}
+.v117-bar {
+  width: 75%;
+  margin: 0 auto;
+  border-radius: 5px 5px 0 0;
+  min-height: 2px;
+}
+.v117-trend {
+  width: 100%;
+  max-height: 225px;
+}
+.v117-radar-layout {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+  min-height: 270px;
+}
+.v117-radar-svg {
+  width: min(100%, 460px);
+  height: auto;
+  min-width: 235px;
+}
+.v117-radar-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+  max-width: 290px;
+  line-height: 1.4;
+  color: #3b516b;
+  font-size: 13px;
+}
+.v117-radar-legend strong {
+  font-size: 16px;
+  color: #163a6a;
+}
+.v117-radar-legend span {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+.v117-radar-legend i {
+  width: 17px;
+  height: 5px;
+  display: inline-block;
+  border-radius: 3px;
+}
+.v117-radar-legend small {
+  color: #6a7a8e;
+}
+.v117-radar-tools {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+  margin: 8px 0;
+}
+.v117-radar-tools select {
+  width: auto;
+  min-width: 180px;
+  margin: 0;
+}
+.v117-table-scroll {
+  overflow: auto;
+}
+.v117-note {
+  font-size: 12px;
+  color: #62738c;
+  margin: 0 0 16px;
+}
+.v117-empty {
+  font-size: 13px;
+  color: #6b7890;
+  padding: 18px;
+  background: #f7f9fd;
+  border-radius: 8px;
+}
+.student-content #studentV117 {
+  margin-bottom: 16px;
+}
+#v112-radar-class .v112-body,
+#v112-radar-individual .v112-body {
+  min-height: 300px;
+}
+@media (max-width: 850px) {
+  .v117-filters,
+  .v117-metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .v117-grid {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 500px) {
+  .v117-filters,
+  .v117-metrics {
+    grid-template-columns: 1fr;
+  }
+  .v117-radar-svg {
+    min-width: 0;
+  }
+}
+
+/* PATCH V11.8 - only student navigation: compact filters, A1/A2/A3 and PDF action. */
+#studentScreen #studentAssessmentSwitch {
+  display: none !important;
+}
+#studentScreen .student-menu-title {
+  display: none;
+}
+#studentScreen .student-sidebar {
+  width: 210px;
+  min-width: 210px;
+}
+#studentScreen .student-main {
+  min-width: 0;
+}
+#studentScreen .v118-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: -1px 0 14px;
+}
+#studentScreen .v118-assessments {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 4px;
+  border: 1px solid #dbe6f4;
+  border-radius: 11px;
+  background: #f1f5fc;
+}
+#studentScreen .v118-tab {
+  border: 0;
+  background: transparent;
+  border-radius: 8px;
+  padding: 9px 23px;
+  color: #25456e;
+  font-weight: 800;
+  font-size: 14px;
+  cursor: pointer;
+}
+#studentScreen .v118-tab.active {
+  background: #1f67db;
+  color: white;
+  box-shadow: 0 2px 6px #164ea633;
+}
+#studentScreen .v118-tab:disabled {
+  opacity: 0.42;
+  cursor: not-allowed;
+}
+#studentScreen .v118-print-slot {
+  margin-left: auto;
+}
+#studentScreen .v118-print-btn {
+  white-space: nowrap;
+  padding: 11px 15px;
+}
+#studentScreen .student-hero:has(+ .student-metrics) #studentPrintBtn {
+  display: none;
+}
+@media (max-width: 850px) {
+  #studentScreen .student-sidebar {
+    width: 170px;
+    min-width: 170px;
+  }
+  #studentScreen .v118-tab {
+    padding: 9px 14px;
+  }
+}
+@media (max-width: 600px) {
+  #studentScreen .student-sidebar {
+    width: auto;
+    min-width: 0;
+  }
+  #studentScreen .v118-actions {
+    align-items: stretch;
+  }
+  #studentScreen .v118-print-slot {
+    margin: 0;
+    width: 100%;
+  }
+  #studentScreen .v118-print-btn {
+    width: 100%;
+  }
+}
+
+/* Etapa 4: ajustes do painel do aluno pedidos na reuniao de 06/11. */
+.v117-metrics.v117-metrics-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.v117-metrics.v117-metrics-3 > div:nth-child(2) {
+  background: #fff0f0;
+  border-color: #f5dddd;
+}
+.v117-metrics.v117-metrics-3 > div:nth-child(3) {
+  background: #edf5ff;
+  border-color: #d5e6f9;
+}
+@media (max-width: 700px) {
+  .v117-metrics.v117-metrics-3 {
+    grid-template-columns: 1fr;
+  }
+}
+/* Linha pontilhada de 60% no grafico de barras e nome da disciplina em cada barra. */
+.v117-bars-ref .v117-bararea {
+  position: relative;
+}
+.v117-bars-ref .v117-bararea::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 60%;
+  border-top: 2px dashed #dca54f;
+  pointer-events: none;
+}
+.v117-bars-ref .v117-ref60 {
+  position: absolute;
+  left: 2px;
+  bottom: calc(60% + 3px);
+  font-style: normal;
+  font-size: 9px;
+  font-weight: 700;
+  color: #996918;
+  z-index: 1;
+}
+.v117-bars-ref .v117-baritem {
+  min-width: 62px;
+  max-width: 110px;
+}
+.v117-bars-ref .v117-bartotal {
+  border-right: 1px solid #dbe5f0;
+  padding-right: 8px;
+}
+.v117-bars-ref .v117-barname {
+  display: block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 600;
+  color: #2b496b;
+}
+/* Abrir a disciplina direto nos graficos. */
+.v117-subject .v117-open {
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 8px;
+  padding: 10px 12px;
+  cursor: pointer;
+}

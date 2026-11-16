@@ -1,0 +1,351 @@
+/* Student bulk enrollment: scoped styles, matching the existing Suprema palette. */
+[data-student-period][hidden],
+.student-import [hidden],
+.student-import[hidden] {
+  display: none !important;
+}
+.user-import-entry {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin: 0 0 20px;
+  color: #59718c;
+  font-size: 13px;
+}
+.student-import {
+  scroll-margin-top: 20px;
+  min-width: 0;
+}
+.import-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 20px;
+}
+.import-heading h3 {
+  margin: 6px 0 8px;
+  font-size: 21px;
+  color: #113d70;
+}
+.import-heading p,
+.import-confirm p,
+.import-report-title p {
+  margin: 0;
+  color: #60748c;
+  font-size: 13px;
+  line-height: 1.6;
+}
+.import-upload {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  border: 1px dashed #b8cfe9;
+  border-radius: 12px;
+  background: #f7faff;
+  padding: 18px;
+}
+.import-upload > div {
+  min-width: 0;
+}
+.import-upload strong {
+  display: block;
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+.import-upload span {
+  display: block;
+  font-size: 12px;
+  line-height: 1.6;
+  color: #63758e;
+  margin-top: 4px;
+}
+.import-counters {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin: 20px 0;
+}
+.import-counters > div {
+  border: 1px solid #dce7f3;
+  border-radius: 12px;
+  padding: 15px;
+  background: #fff;
+}
+.import-counters span {
+  display: block;
+  color: #62778f;
+  font-size: 12px;
+  margin-bottom: 6px;
+}
+.import-counters strong {
+  font-size: 26px;
+  color: #103f76;
+}
+.import-note {
+  padding: 13px 16px;
+  border-left: 3px solid #2b6de8;
+  background: #f0f6ff;
+  border-radius: 6px;
+  color: #48617e;
+  font-size: 13px;
+  line-height: 1.65;
+}
+.import-note code {
+  overflow-wrap: anywhere;
+  font-size: 12px;
+}
+.import-details {
+  margin: 16px 0;
+  border: 1px solid #dde7f3;
+  border-radius: 10px;
+  padding: 13px 15px;
+}
+.import-details summary {
+  cursor: pointer;
+  color: #254f7e;
+  font-weight: 650;
+  font-size: 13px;
+}
+.import-details ul {
+  font-size: 12px;
+  line-height: 1.8;
+  color: #63758e;
+}
+.import-sheet-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin: 18px 0;
+}
+.student-import label {
+  display: grid;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #4b6480;
+  min-width: 0;
+}
+.student-import label.file-btn {
+  display: inline-flex;
+  flex-shrink: 0;
+  color: #163c69;
+}
+.student-import label.file-btn.primary {
+  color: #fff;
+}
+.import-sheet-grid small {
+  color: #6b7f97;
+  font-weight: 400;
+  font-size: 11px;
+  margin-left: 4px;
+}
+.student-import select,
+.student-import input:not([type='file']):not([type='checkbox']) {
+  width: 100%;
+  min-width: 0;
+  border: 1px solid #c9daed;
+  border-radius: 8px;
+  padding: 10px;
+  font: inherit;
+  color: #163f6a;
+  background: #fff;
+}
+.student-import input[type='checkbox'] {
+  width: 17px;
+  height: 17px;
+  accent-color: #286be6;
+}
+.student-import input:focus,
+.student-import select:focus {
+  outline: 2px solid #b7d0fb;
+  outline-offset: 2px;
+}
+.import-toolbar {
+  display: flex;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 22px 0 12px;
+}
+.import-toolbar label {
+  min-width: 155px;
+}
+.import-dirty {
+  font-size: 12px;
+  color: #87500a;
+  max-width: 240px;
+  padding-bottom: 8px;
+}
+.import-table-scroll {
+  max-height: 540px;
+  border: 1px solid #dce7f3;
+  border-radius: 10px;
+  overflow: auto;
+}
+.import-table {
+  min-width: 810px;
+}
+.import-table th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: #edf4fd;
+}
+.import-table td {
+  vertical-align: middle;
+}
+.import-table td:nth-child(2) {
+  min-width: 180px;
+}
+.import-table td:nth-child(4) {
+  width: 100px;
+}
+.import-table td:last-child {
+  min-width: 215px;
+}
+.import-table .cell-sub {
+  max-width: 310px;
+  line-height: 1.5;
+  margin-top: 4px;
+}
+.import-matricula {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.import-status {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 650;
+  padding: 5px 8px;
+  border-radius: 99px;
+  background: #f0f3f8;
+  color: #58708d;
+}
+.status-ready {
+  background: #e5f5ed;
+  color: #116844;
+}
+.status-invalid,
+.status-duplicate {
+  background: #fff0f0;
+  color: #a52e3b;
+}
+.status-review_period {
+  background: #fff4df;
+  color: #87520a;
+}
+.import-pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin: 12px 0;
+  color: #697d95;
+  font-size: 12px;
+}
+.import-pagination > div {
+  display: flex;
+  gap: 8px;
+}
+.import-confirm {
+  border-top: 1px solid #dce7f3;
+  margin-top: 22px;
+  padding-top: 20px;
+}
+.import-confirm h4,
+.import-report-title h4 {
+  margin: 0 0 6px;
+  font-size: 17px;
+  color: #163f6a;
+}
+.import-passwords {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  max-width: 750px;
+  margin: 16px 0;
+}
+.import-confirm .muted {
+  font-size: 12px;
+  max-width: 900px;
+  margin: 12px 0 17px;
+  line-height: 1.6;
+}
+.import-message {
+  margin: 15px 0;
+  padding: 12px 15px;
+  background: #edf5ff;
+  border-radius: 8px;
+  border: 1px solid #d3e4f8;
+  color: #254f7e;
+  font-size: 13px;
+  line-height: 1.5;
+}
+.import-message.import-error {
+  background: #fff3f3;
+  border-color: #f4cbcf;
+  color: #9e2634;
+}
+.import-report-title {
+  margin-top: 22px;
+}
+.import-report-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.import-report-notes {
+  font-size: 12px;
+  line-height: 1.8;
+  color: #60758f;
+  padding-left: 20px;
+}
+.student-import button:disabled,
+.student-import input:disabled,
+.student-import select:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+@media (max-width: 900px) {
+  .import-counters {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .import-sheet-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 600px) {
+  .user-import-entry,
+  .import-upload {
+    align-items: stretch;
+    flex-direction: column;
+  }
+  .import-heading {
+    gap: 10px;
+  }
+  .import-heading h3 {
+    font-size: 18px;
+  }
+  .import-passwords,
+  .import-sheet-grid {
+    grid-template-columns: 1fr;
+  }
+  .import-toolbar label {
+    flex: 1 1 100%;
+  }
+  .import-pagination {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .import-confirm > .btn {
+    width: 100%;
+  }
+  .import-counters > div {
+    padding: 12px;
+  }
+  .import-counters span {
+    min-height: 30px;
+  }
+}

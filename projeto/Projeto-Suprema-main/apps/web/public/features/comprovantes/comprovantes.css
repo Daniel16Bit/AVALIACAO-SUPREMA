@@ -1,0 +1,72 @@
+/* Comprovantes: so o que e proprio deste modulo. Componentes comuns em /styles/modulos.css. */
+.mod-root .receipt-card {
+  border-left: 4px solid #1aa35b;
+  background: #f3fbf6;
+}
+.mod-root .receipt-card h3 {
+  margin: 0 0 6px;
+  color: #0f6b3a;
+}
+.mod-root .receipt-card p {
+  margin: 4px 0;
+  font-size: 13px;
+}
+.mod-root .receipt-code {
+  font-family: Consolas, 'Courier New', monospace;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #172c42;
+  margin: 10px 0 !important;
+  word-break: break-all;
+}
+.mod-root .receipt-code-small {
+  font-family: Consolas, 'Courier New', monospace;
+  font-size: 12px;
+  white-space: nowrap;
+}
+.mod-root .receipt-verify {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: flex-end;
+  margin-bottom: 12px;
+}
+.mod-root .receipt-verify label {
+  flex: 1 1 320px;
+  margin-bottom: 0;
+}
+.mod-root .receipt-result {
+  margin-top: 6px;
+  padding: 14px 16px;
+  border-radius: 10px;
+  font-size: 14px;
+}
+.mod-root .receipt-result.valid {
+  border: 1px solid #9fd8b6;
+  background: #f3fbf6;
+  color: #0f4f2c;
+}
+.mod-root .receipt-result.invalid {
+  border: 1px solid #f1b4b4;
+  background: #fdf1f1;
+  color: #8a1f1f;
+}
+.mod-root .receipt-result dl {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 6px 16px;
+  margin: 12px 0 8px;
+}
+.mod-root .receipt-result dt {
+  color: #52657a;
+  font-size: 12px;
+}
+.mod-root .receipt-result dd {
+  margin: 0;
+  font-weight: 650;
+  color: #172c42;
+}
+#studentModuleNav > div {
+  margin-top: 10px;
+}

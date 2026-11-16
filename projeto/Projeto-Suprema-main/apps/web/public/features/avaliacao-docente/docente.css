@@ -1,0 +1,95 @@
+/* Modulo Avaliacao Docente: so o que e proprio dele. Os componentes comuns das telas dos
+   modulos estao em /styles/modulos.css. */
+.mod-root .docente-pct {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 190px;
+}
+.mod-root .docente-pct b {
+  min-width: 54px;
+  text-align: right;
+  color: #23496f;
+}
+.mod-root .docente-track {
+  flex: 1;
+  min-width: 90px;
+}
+.mod-root .h-row.docente-history {
+  grid-template-columns: minmax(200px, 1.4fr) minmax(120px, 1fr) 96px;
+  font-size: 12px;
+}
+.mod-root .docente-subtitle {
+  margin: 16px 0 8px;
+  font-size: 13px;
+  color: #172c42;
+}
+.mod-root .docente-subtitle:first-child {
+  margin-top: 0;
+}
+.mod-root .docente-comments {
+  margin: 8px 0;
+  font-size: 13px;
+}
+.mod-root .docente-comments summary {
+  cursor: pointer;
+  color: #145a97;
+  font-weight: 650;
+}
+.mod-root .docente-comments ul {
+  margin: 8px 0 0;
+  padding-left: 20px;
+  color: #344054;
+}
+.mod-root .docente-comments li {
+  margin: 6px 0;
+}
+.mod-root .docente-insufficient {
+  margin: 0;
+  padding: 12px 14px;
+  border-left: 4px solid #dca54f;
+  background: #fffaf0;
+  font-size: 13px;
+  color: #5b4410;
+}
+.mod-root .docente-filter {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13px;
+  color: #344054;
+}
+.mod-root .docente-filter select {
+  border: 1px solid #d0d5dd;
+  border-radius: 8px;
+  padding: 10px;
+  min-height: 40px;
+  background: #fff;
+  color: #182230;
+  font: inherit;
+  min-width: 260px;
+}
+
+/* Entrada do modulo na barra lateral do aluno. */
+#studentModuleNav {
+  margin-top: 10px;
+}
+#studentModuleNav .btn {
+  width: 100%;
+}
+#studentModuleNav .mod-tag {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: #fdf3dc;
+  color: #7a5207;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+@media (max-width: 700px) {
+  .mod-root .h-row.docente-history {
+    grid-template-columns: 1fr;
+  }
+}

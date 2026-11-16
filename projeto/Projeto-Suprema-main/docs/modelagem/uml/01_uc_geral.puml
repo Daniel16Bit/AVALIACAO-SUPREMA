@@ -1,0 +1,70 @@
+@startuml UC_Geral
+skinparam shadowing false
+skinparam actorStyle awesome
+skinparam packageStyle rectangle
+title Avaliação Suprema — Diagrama Geral de Casos de Uso (versão A1/A2)
+left to right direction
+
+actor "Usuário" as U <<abstrato>>
+actor "Administrador" as ADM
+actor "Professor" as PROF
+actor "Aluno" as ALU
+U <|-- ADM
+U <|-- PROF
+U <|-- ALU
+
+rectangle "Avaliação Suprema" {
+  usecase "UC01 Autenticar-se" as UC01
+
+  package "Gestão acadêmica" {
+    usecase "UC02 Manter Usuários" as UC02
+    usecase "UC05 Redefinir Senha\nde Usuário" as UC05
+    usecase "UC06 Manter Cursos" as UC06
+    usecase "UC07 Manter Disciplinas" as UC07
+    usecase "UC08 Gerenciar\nVínculos Acadêmicos" as UC08
+    usecase "UC11 Consultar Informações\nAdministrativas" as UC11
+  }
+
+  package "Avaliações A1/A2" {
+    usecase "UC12 Consultar\nDisciplinas Vinculadas" as UC12
+    usecase "UC13 Visualizar Alunos\nda Disciplina" as UC13
+    usecase "UC15 Lançar Notas\npor Questão" as UC15
+    usecase "UC17 Editar Notas\nNão Publicadas" as UC17
+    usecase "UC20 Publicar Resultados" as UC20
+    usecase "UC21 Consultar Notas e\nRelatórios de Desempenho" as UC21
+  }
+
+  package "Consulta do aluno" {
+    usecase "UC23 Visualizar\nAvaliações Disponíveis" as UC23
+    usecase "UC24 Consultar\nResultados Publicados" as UC24
+    usecase "UC25 Acompanhar\nMeu Desempenho" as UC25
+  }
+}
+
+U --> UC01
+
+ADM --> UC02
+ADM --> UC06
+ADM --> UC07
+ADM --> UC08
+ADM --> UC11
+UC05 .> UC02 : <<extend>>
+
+PROF --> UC12
+PROF --> UC13
+PROF --> UC15
+PROF --> UC17
+PROF --> UC20
+PROF --> UC21
+
+ALU --> UC12
+ALU --> UC23
+ALU --> UC24
+ALU --> UC25
+
+note bottom of UC01
+  Todos os demais casos de uso exigem
+  sessão autenticada (pré-condição),
+  não <<include>> de UC01.
+end note
+@enduml

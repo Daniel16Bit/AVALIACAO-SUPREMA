@@ -1,0 +1,811 @@
+/* Visual revision only: campus login and compact professor workspace.
+   Scoped selectors avoid changing administrator/student dashboards. */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* The original campus photo is a local asset, without embedded login fields. */
+.login-screen {
+  grid-template-columns: minmax(0, 1.12fr) minmax(400px, 1fr);
+  background: #f7faff;
+}
+.login-campus {
+  isolation: isolate;
+  padding: 42px 9%;
+  background: #07386d;
+  min-height: 100vh;
+}
+.login-campus .campus-photo {
+  position: absolute;
+  z-index: -2;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 52% center;
+}
+.login-campus::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(4, 31, 62, 0.72) 0%,
+    rgba(5, 39, 77, 0.12) 32%,
+    rgba(4, 29, 59, 0.12) 48%,
+    rgba(4, 29, 59, 0.9) 82%,
+    #04203f 100%
+  );
+  pointer-events: none;
+}
+.login-campus::after {
+  display: none;
+}
+.login-campus .brand {
+  position: relative;
+}
+.login-campus .login-story-content {
+  margin: auto 0 0;
+  padding: 180px 0 22px;
+}
+.login-campus h1 {
+  font-size: clamp(38px, 3.9vw, 57px);
+  letter-spacing: -1.8px;
+  margin: 13px 0 14px;
+}
+.login-campus .eyebrow {
+  color: #b9ddfb;
+  letter-spacing: 1.8px;
+}
+.login-campus p {
+  font-size: 15px;
+  line-height: 1.65;
+  color: #e0edf9;
+  margin: 0;
+}
+.login-campus .login-footnote {
+  color: #b1c8dd;
+  margin-top: 17px;
+  line-height: 1.5;
+}
+.login-form-zone {
+  padding: 48px 36px 64px;
+}
+.live-login {
+  background: transparent;
+}
+
+/* Compact context: keep all controls, remove redundant vertical spacing. */
+#appScreen #mainView {
+  padding-top: 16px;
+}
+#mainView .section-heading {
+  margin-bottom: 14px;
+  gap: 16px;
+}
+#mainView .section-heading .eyebrow {
+  margin-bottom: 5px;
+  font-size: 10px;
+}
+#mainView .section-heading h1 {
+  font-size: 25px;
+  line-height: 1.2;
+}
+#mainView .section-heading p {
+  font-size: 12px;
+  line-height: 1.5;
+  margin-top: 5px;
+}
+#mainView .section-heading > .btn {
+  min-height: 36px;
+  padding: 7px 12px;
+  font-size: 12px;
+}
+#mainView .context-row {
+  display: flex;
+  padding: 12px 16px;
+  gap: 8px 12px;
+  border-radius: 12px;
+  align-items: flex-end;
+}
+#mainView #teacherContextFilters {
+  gap: 12px;
+  grid-template-columns: 100px 140px 135px minmax(180px, 1fr);
+}
+#mainView .filters label {
+  font-size: 11px;
+  line-height: 1.3;
+}
+#mainView .filters select {
+  margin-top: 5px;
+  height: 38px;
+  font-size: 12px;
+}
+#mainView #contextNotice {
+  font-size: 11px !important;
+  line-height: 1.4;
+  margin: 0 !important;
+}
+#mainView #contextNotice:empty {
+  display: none;
+}
+#mainView .type-switch {
+  min-height: 38px;
+  padding: 3px;
+}
+#mainView .type-switch button {
+  min-height: 32px;
+  padding: 6px 15px;
+  font-size: 13px;
+}
+#mainView .tabs {
+  margin-top: 12px;
+  margin-bottom: 12px;
+  gap: 26px;
+}
+#mainView .tab {
+  padding: 10px 2px;
+  font-size: 12px;
+}
+#mainView .tab-pane {
+  padding-top: 0;
+}
+#launchTab .toolbar {
+  margin-bottom: 8px;
+  gap: 8px;
+}
+#launchTab .toolbar .btn {
+  min-height: 38px;
+  padding: 8px 12px;
+  font-size: 12px;
+}
+#launchTab .draft-state {
+  font-size: 11px;
+  line-height: 16px;
+  margin: 0 0 8px;
+  padding-left: 9px;
+}
+#launchTab .lock-banner {
+  margin: 0 0 8px;
+}
+#launchTab .table-wrap {
+  border-radius: 12px;
+  border-color: #d4e2ef;
+  box-shadow: 0 3px 14px #173e6405;
+  max-height: calc(100dvh - 400px);
+  min-height: 200px;
+}
+
+/* Student identification: aligned, legible and stationary while scrolling. */
+#scoresTable {
+  --number-width: 44px;
+  --registration-width: 106px;
+  --name-width: 238px;
+  --group-height: 32px;
+}
+#scoresTable th {
+  font-size: 11px;
+  line-height: 1.4;
+  border-right-color: #e4edf5;
+}
+#scoresTable .group-head > th:not([rowspan]) {
+  height: var(--group-height);
+  padding: 7px 12px;
+  white-space: nowrap;
+  background: #e7f1fc;
+  color: #174773;
+  font-size: 11px;
+  font-weight: 700;
+}
+#scoresTable .question-head > th {
+  top: var(--group-height);
+  background: #f5f9fe;
+  padding: 10px 9px;
+}
+#scoresTable .question-config > span {
+  font-size: 11px;
+  font-weight: 700;
+  color: #234a70;
+}
+#scoresTable .question-config small {
+  font-size: 10px;
+  line-height: 1.45;
+  margin-top: 4px;
+}
+#scoresTable .question-config em {
+  font-size: 10px;
+  font-weight: 500;
+  margin-top: 4px;
+  color: #6c839a;
+}
+#scoresTable .group-head > .identity-col {
+  background: #edf4fc;
+  color: #234a70;
+  vertical-align: middle;
+  text-align: left;
+  padding: 12px;
+  border-bottom: 1px solid #cbdceb;
+  z-index: 5;
+}
+#scoresTable .identity-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1.4;
+}
+#scoresTable .identity-number {
+  width: var(--number-width);
+  min-width: var(--number-width);
+  max-width: var(--number-width);
+}
+#scoresTable .identity-registration {
+  width: var(--registration-width);
+  min-width: var(--registration-width);
+  max-width: var(--registration-width);
+}
+#scoresTable .identity-name {
+  width: var(--name-width);
+  min-width: var(--name-width);
+  max-width: var(--name-width);
+}
+#scoresTable .group-head > .identity-number {
+  left: 0;
+  text-align: center;
+  padding: 10px 6px;
+}
+#scoresTable .group-head > .identity-registration {
+  left: var(--number-width);
+}
+#scoresTable .group-head > .identity-name {
+  left: calc(var(--number-width) + var(--registration-width));
+}
+#scoresTable tbody > tr > td {
+  height: 47px;
+  padding: 8px 7px;
+  border-bottom-color: #e7eef6;
+  border-right-color: #edf2f7;
+  vertical-align: middle;
+  background: #fff;
+}
+#scoresTable tbody > tr:nth-child(even) > td {
+  background: #f9fbfe;
+}
+#scoresTable tbody > tr:hover > td,
+#scoresTable tbody > tr:focus-within > td {
+  background: #edf5ff;
+}
+#scoresTable tbody > tr > td.identity-number {
+  position: sticky;
+  left: 0;
+  z-index: 3;
+  text-align: center;
+  color: #8395a8;
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  padding: 8px 6px;
+}
+#scoresTable tbody > tr > td.identity-registration {
+  position: sticky;
+  left: var(--number-width);
+  z-index: 3;
+  font-size: 12px;
+  font-weight: 500;
+  color: #46617d;
+  padding: 8px 12px;
+  font-variant-numeric: tabular-nums;
+}
+#scoresTable tbody > tr > td.identity-name {
+  position: sticky;
+  left: calc(var(--number-width) + var(--registration-width));
+  z-index: 3;
+  padding: 8px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #193e63;
+}
+#scoresTable th.identity-name,
+#scoresTable td.identity-name {
+  box-shadow: 3px 0 5px -4px #355d83;
+  border-right: 1px solid #cbdceb;
+}
+#scoresTable .student-name {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: calc(var(--name-width) - 25px);
+}
+#scoresTable input {
+  min-height: 32px;
+  padding: 6px;
+  font-size: 12px;
+}
+
+@media (max-width: 1200px) and (min-width: 981px) {
+  #mainView #teacherContextFilters {
+    grid-template-columns: 80px 112px 112px minmax(130px, 1fr);
+    gap: 8px;
+  }
+  #mainView .context-row {
+    padding: 12px;
+    gap: 8px;
+  }
+  #mainView .type-switch button {
+    padding-inline: 10px;
+  }
+  #scoresTable {
+    --name-width: 208px;
+  }
+}
+@media (max-width: 760px) {
+  .login-screen {
+    grid-template-columns: 1fr;
+  }
+  .login-campus {
+    min-height: 260px;
+    padding: 22px 26px;
+  }
+  .login-campus .campus-photo {
+    object-position: 50% 45%;
+  }
+  .login-campus::before {
+    background:
+      linear-gradient(100deg, rgba(4, 31, 62, 0.82), rgba(4, 31, 62, 0.25)),
+      linear-gradient(0deg, rgba(4, 31, 62, 0.82), transparent 70%);
+  }
+  .login-campus .brand-mark {
+    font-size: 40px;
+  }
+  .login-campus .brand b {
+    font-size: 20px;
+  }
+  .login-campus .login-story-content {
+    padding: 30px 0 0;
+  }
+  .login-campus h1 {
+    font-size: 30px;
+    margin: 4px 0 8px;
+    letter-spacing: -0.8px;
+  }
+  .login-campus h1 br {
+    display: none;
+  }
+  .login-campus h1 br::after {
+    content: ' ';
+  }
+  .login-campus p {
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  .login-campus .login-footnote,
+  .login-campus .eyebrow {
+    display: none;
+  }
+  .login-form-zone {
+    padding: 28px 24px 54px;
+  }
+  .live-login h2 {
+    font-size: 25px;
+  }
+  .live-login > p {
+    margin-bottom: 22px;
+  }
+  .live-login label {
+    margin-top: 16px;
+  }
+  .live-login button {
+    margin-top: 22px;
+  }
+  #appScreen #mainView {
+    padding: 14px 14px 28px;
+  }
+  #mainView .section-heading {
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  #mainView .section-heading h1 {
+    font-size: 22px;
+  }
+  #mainView .section-heading p {
+    font-size: 11px;
+  }
+  #mainView .section-heading > .btn {
+    font-size: 10px;
+    padding: 7px 9px;
+  }
+  #mainView #teacherContextFilters {
+    grid-template-columns: 1fr 1fr;
+    flex-basis: 100%;
+    gap: 10px;
+  }
+  #mainView .context-row {
+    padding: 12px;
+  }
+  #mainView .type-switch {
+    margin-top: 0;
+  }
+  #mainView .tabs {
+    gap: 18px;
+    margin-top: 8px;
+  }
+  #mainView .tab {
+    font-size: 11px;
+  }
+  #launchTab .toolbar-right {
+    margin-left: auto;
+  }
+  #launchTab .toolbar .btn {
+    min-height: 36px;
+    font-size: 11px;
+    padding: 7px 10px;
+  }
+  #launchTab .table-wrap {
+    max-height: 60dvh;
+  }
+  #scoresTable {
+    --name-width: 208px;
+  }
+  #scoresTable .group-head > .identity-col {
+    left: auto;
+  }
+  #scoresTable tbody > tr > td.identity-number,
+  #scoresTable tbody > tr > td.identity-registration,
+  #scoresTable tbody > tr > td.identity-name {
+    position: static;
+  }
+}
+@media (max-height: 720px) and (min-width: 761px) {
+  .login-campus {
+    padding-top: 30px;
+    padding-bottom: 25px;
+  }
+  .login-campus .login-story-content {
+    padding-top: 90px;
+  }
+  .login-form-zone {
+    padding-top: 28px;
+    padding-bottom: 50px;
+  }
+  .live-login label {
+    margin-top: 16px;
+  }
+  #launchTab .table-wrap {
+    max-height: 60vh;
+  }
+}
+@media print {
+  #scoresTable .identity-col,
+  #scoresTable tbody > tr > td.identity-number,
+  #scoresTable tbody > tr > td.identity-registration,
+  #scoresTable tbody > tr > td.identity-name {
+    position: static;
+    box-shadow: none;
+  }
+  #launchTab .table-wrap {
+    max-height: none;
+    overflow: visible;
+  }
+}
+/* Keep institutional name visible on compact screens, despite legacy sidebar rules. */
+.login-campus .brand div:not(.brand-mark) {
+  display: block;
+}
+#scoresTable .group-head > .cognitive-group,
+#scoresTable .group-head > .osce-group {
+  text-align: left;
+  padding-left: 16px;
+}
+@media (max-width: 980px) {
+  #appScreen .sidebar .brand div:not(.brand-mark),
+  #appScreen .sidebar .nav-item span {
+    display: block;
+  }
+}
+@media (max-width: 980px) and (min-width: 761px) {
+  #mainView .context-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+  }
+  #mainView #teacherContextFilters {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    width: 100%;
+    grid-template-columns: 90px 128px 126px minmax(160px, 1fr);
+  }
+  #mainView #contextNotice {
+    grid-column: 1;
+    grid-row: 2;
+    order: 0;
+  }
+  #mainView .type-switch {
+    grid-column: 2;
+    grid-row: 2;
+    justify-self: end;
+  }
+}
+
+/* Somente planilha do professor: cabeçalho simples, em linha única. */
+#scoresTable .simple-grade-head > th {
+  top: 0;
+  vertical-align: middle;
+  background: #f5f9fe;
+  padding: 10px 9px;
+}
+#scoresTable .simple-grade-head > .identity-col {
+  background: #edf4fc;
+  color: #234a70;
+  font-size: 12px;
+  font-weight: 700;
+}
+#scoresTable .simple-grade-head > .identity-number {
+  left: 0;
+}
+#scoresTable .simple-grade-head > .identity-registration {
+  left: var(--number-width);
+}
+#scoresTable .simple-grade-head > .identity-name {
+  left: calc(var(--number-width) + var(--registration-width));
+}
+@media (max-width: 700px) {
+  #scoresTable .simple-grade-head > .identity-col {
+    left: auto;
+  }
+}
+
+/* PATCH V11.1 - somente organizacao visual da planilha A1/A2. */
+/* Usa seletores de professor para nao afetar Administrador e Aluno. */
+#appScreen #mainView {
+  max-width: none;
+  padding: 12px 16px 20px;
+}
+#appScreen .topbar {
+  height: 54px;
+  padding-inline: 20px;
+}
+#appScreen #mainView .section-heading {
+  margin-bottom: 9px;
+}
+#appScreen #mainView .section-heading h1 {
+  font-size: 23px;
+}
+#appScreen #mainView .context-row {
+  padding: 9px 13px;
+  gap: 5px 12px;
+}
+#appScreen #mainView .filters select {
+  height: 34px;
+  margin-top: 3px;
+}
+#appScreen #mainView .type-switch {
+  min-height: 34px;
+}
+#appScreen #mainView .type-switch button {
+  min-height: 28px;
+}
+#appScreen #mainView .tabs {
+  margin-top: 7px;
+  margin-bottom: 8px;
+}
+#appScreen #mainView .tab {
+  padding: 8px 2px;
+}
+#appScreen #launchTab .toolbar {
+  margin-bottom: 5px;
+}
+#appScreen #launchTab .toolbar .btn {
+  min-height: 34px;
+  padding: 6px 11px;
+}
+#appScreen #launchTab .draft-state {
+  margin-bottom: 5px;
+}
+#appScreen #launchTab .table-wrap {
+  max-height: calc(100dvh - 320px);
+  min-height: 320px;
+  width: 100%;
+}
+#appScreen #scoresTable {
+  --number-width: 38px;
+  --registration-width: 98px;
+  --name-width: 224px;
+}
+#appScreen #scoresTable .simple-grade-head > th {
+  padding: 8px 6px;
+}
+#appScreen #scoresTable .question-config {
+  min-width: 105px;
+}
+#appScreen #scoresTable tbody > tr > td {
+  height: 43px;
+  padding: 6px 5px;
+}
+#appScreen #scoresTable input {
+  min-height: 30px;
+}
+#appScreen #scoresTable .student-name {
+  max-width: calc(var(--name-width) - 22px);
+}
+#appScreen .suprema-sheet-tools {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin: 0 0 6px;
+}
+#appScreen .suprema-expand-btn {
+  font:
+    600 12px 'Segoe UI',
+    Arial,
+    sans-serif;
+  color: #1b527d;
+  background: white;
+  border: 1px solid #d4e2ef;
+  border-radius: 8px;
+  padding: 6px 10px;
+  cursor: pointer;
+}
+#appScreen .suprema-expand-btn:hover {
+  background: #eaf3fd;
+}
+#appScreen .suprema-expand-btn:focus-visible {
+  outline: 3px solid #6eb4f2;
+  outline-offset: 2px;
+}
+/* Modo ampliado opcional: mantem todas as colunas, botoes e dados intactos. */
+#appScreen.suprema-sheet-expanded {
+  display: block;
+}
+#appScreen.suprema-sheet-expanded > .sidebar {
+  display: none;
+}
+#appScreen.suprema-sheet-expanded > .main > .topbar {
+  display: none;
+}
+#appScreen.suprema-sheet-expanded #mainView {
+  padding: 10px 14px;
+  max-width: none;
+}
+#appScreen.suprema-sheet-expanded #mainView > .section-heading,
+#appScreen.suprema-sheet-expanded #mainView > .context-row {
+  display: none;
+}
+#appScreen.suprema-sheet-expanded #mainView > .tabs {
+  margin: 0 0 6px;
+}
+#appScreen.suprema-sheet-expanded #launchTab .table-wrap {
+  height: calc(100dvh - 122px);
+  max-height: none;
+  min-height: 240px;
+}
+#appScreen.suprema-sheet-expanded #launchTab .suprema-sheet-tools {
+  margin-bottom: 3px;
+}
+@media (max-width: 980px) {
+  #appScreen #mainView {
+    padding-inline: 12px;
+  }
+  #appScreen #launchTab .table-wrap {
+    max-height: 65dvh;
+    min-height: 210px;
+  }
+  #appScreen.suprema-sheet-expanded #launchTab .table-wrap {
+    height: calc(100dvh - 140px);
+    max-height: none;
+  }
+}
+@media (max-width: 700px) {
+  #appScreen #scoresTable {
+    --name-width: 208px;
+  }
+  #appScreen #mainView .context-row {
+    padding: 10px;
+  }
+  #appScreen #launchTab .table-wrap {
+    max-height: 60dvh;
+    min-height: 180px;
+  }
+}
+@media print {
+  #appScreen .suprema-sheet-tools {
+    display: none !important;
+  }
+  #appScreen #launchTab .table-wrap {
+    height: auto !important;
+    max-height: none !important;
+    min-height: 0 !important;
+  }
+}
+
+.service-status {
+  position: sticky;
+  top: 0;
+  z-index: 9999;
+  padding: 12px 18px;
+  background: #fff1cc;
+  color: #563b00;
+  border-bottom: 1px solid #e9cc80;
+  font: 500 14px/1.5 system-ui;
+  text-align: center;
+}
+.service-status[hidden] {
+  display: none;
+}
+
+/* Etapa 4: valor maximo dos instrumentos (SAI, estacoes do OSCE, trabalho, outros) no cabecalho. */
+#scoresTable th.editable-th em,
+#scoresTable th.instrument-th em {
+  display: block;
+  font-size: 10px;
+  font-weight: 500;
+  font-style: normal;
+  margin-top: 4px;
+  color: #6c839a;
+}
+#scoresTable th.instrument-th {
+  cursor: pointer;
+}
+#scoresTable th.instrument-th:hover {
+  background: #e6f2fd;
+  color: #0758ac;
+}
+#scoresTable th.instrument-th:focus-visible,
+#scoresTable th.editable-th:focus-visible {
+  outline: 2px solid #0877e6;
+  outline-offset: -2px;
+}
+
+/* Etapa 4: media por instrumento sobre o valor maximo declarado, com a marca de 60%. */
+.h-row.instrument-row {
+  grid-template-columns: minmax(150px, 1.2fr) minmax(100px, 1fr) 108px;
+  row-gap: 2px;
+}
+.h-row.instrument-row .h-track {
+  position: relative;
+}
+.h-row.instrument-row .h-mark60 {
+  position: absolute;
+  left: 60%;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: #dca54f;
+}
+.h-row.instrument-row em {
+  grid-column: 1 / -1;
+  font-style: normal;
+  font-size: 10px;
+  color: #6c839a;
+}
+
+/* Etapa 4: nota abaixo da media da turma na planilha. A seta garante a leitura sem depender da cor. */
+#scoresTable td.below-average {
+  background: #fdf0f0;
+  color: #a4262c;
+}
+#scoresTable td.below-average::after {
+  content: ' \2193';
+  font-weight: 700;
+}
+.grid-legend {
+  margin: 8px 2px 0;
+  color: #667085;
+  font-size: 12px;
+}
+.grid-legend .below-average-sample {
+  display: inline-block;
+  padding: 0 6px;
+  border-radius: 4px;
+  background: #fdf0f0;
+  color: #a4262c;
+  font-weight: 700;
+}

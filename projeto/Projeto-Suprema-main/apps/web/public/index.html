@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Avaliação Suprema</title>
+<link rel="stylesheet" href="/styles/styles.css">
+<link rel="stylesheet" href="/styles/modern.css">
+<link rel="stylesheet" href="/styles/ajustes-visuais.css">
+<link rel="stylesheet" href="/features/importacao-alunos/student-import.css">
+<link rel="stylesheet" href="/features/indicadores/analytics.css">
+<link rel="stylesheet" href="/features/evolucao/analytics.css">
+<link rel="stylesheet" href="/features/academico/academico.css">
+<link rel="stylesheet" href="/styles/modulos.css">
+<link rel="stylesheet" href="/features/osce/osce.css">
+<link rel="stylesheet" href="/features/avaliacao-docente/docente.css">
+<link rel="stylesheet" href="/features/comprovantes/comprovantes.css">
+<link rel="stylesheet" href="/features/articulacao/articulacao.css">
+</head>
+<body>
+<section id="loginScreen" class="login-screen">
+  <div class="login-story login-campus">
+    <img class="campus-photo" src="/assets/suprema-campus.jpg" alt="Campus da Suprema" width="1005" height="480" fetchpriority="high">
+    <div class="brand"><div class="brand-mark" aria-hidden="true">S</div><div><b>SUPREMA</b><small>Avalia&ccedil;&atilde;o acad&ecirc;mica</small></div></div>
+    <div class="login-story-content"><span class="eyebrow">AMBIENTE INSTITUCIONAL</span><h1>Avalia&ccedil;&atilde;o<br> Suprema.</h1><p>Acompanhar a aprendizagem.<br>Construir novos caminhos.</p></div>
+    <div class="login-footnote">Professores, estudantes e gest&atilde;o conectados.</div>
+  </div>
+  <div class="login-form-zone"><form id="loginForm" class="live-login"><span class="eyebrow">BEM-VINDO AO AVALIAÇÃO SUPREMA</span><h2>Seu acesso começa aqui.</h2><p>Entre com o cadastro fornecido pelo administrador.</p><label for="loginInput">E-mail ou matrícula</label><input id="loginInput" autocomplete="username" placeholder="Digite seu e-mail ou matrícula" required><label for="passwordInput">Senha</label><input id="passwordInput" type="password" autocomplete="current-password" placeholder="Digite sua senha" required><button type="submit">Entrar no sistema <span aria-hidden="true">→</span></button><div id="loginError" class="login-error" role="alert" aria-live="polite"></div><p class="login-help">Precisa de acesso ou de uma nova senha?<br>Procure o administrador do sistema.</p><p id="setupHint" class="setup-hint hidden">Primeira configuração: execute <strong>npm run admin</strong> no servidor para criar o administrador.</p></form><span class="login-form-footer">Um login. Seu ambiente. Suas informações.</span></div>
+</section>
+<section id="appScreen" class="app hidden">
+  <aside class="sidebar">
+    <div class="brand"><div class="brand-mark">S</div><div><b>SUPREMA</b><small>Três Rios - RJ</small></div></div>
+    <nav>
+      <button class="nav-item active" data-view="a1a2">▣ <span>Avaliação A1 / A2 / A3</span></button>
+      <button class="nav-item dev" data-module="Avaliação Docente">▢ <span>Avaliação Docente</span><small>Em desenvolvimento</small></button>
+      <button class="nav-item dev" data-module="Avaliação OSCE">◉ <span>Avaliação OSCE</span><small>Em desenvolvimento</small></button>
+      <button class="nav-item dev" data-module="Articulação Interdisciplinar">⌘ <span>Articulação Interdisciplinar</span><small>Em desenvolvimento</small></button>
+    </nav>
+  </aside>
+  <main class="main">
+    <header class="topbar teacher-topbar"><div></div><div class="profile"><span id="profName">Professor</span><button type="button" class="change-password-btn">Alterar senha</button><button id="logoutBtn">Sair</button></div></header>
+    <section id="academicEvolutionView" class="content hidden" aria-label="Evolução acadêmica"><div class="evolution-head"><div><h1>Evolução Acadêmica</h1><p>Acompanhamento de resultados publicados por avaliação, semestre e ano.</p></div><button id="backToAssessmentBtn" class="btn">Voltar às avaliações</button></div><div id="academicEvolutionContent"></div></section>
+    <section id="mainView" class="content">
+      <div class="section-heading"><div><h1>Avaliações A1, A2 e A3</h1></div><div class="teacher-heading-actions"><button class="btn primary" id="academicEvolutionBtn" type="button">Evolução Acadêmica</button><button class="btn" id="refreshTeacherBtn">Atualizar vínculos</button></div></div><div class="context-row">
+        <div class="filters" id="teacherContextFilters">
+          <label>Ano<select id="yearSelect"></select></label>
+          <label>Semestre<select id="semesterSelect"></select></label>
+          <label>Período<select id="periodSelect"></select></label>
+          <label>Disciplina<select id="disciplineSelect"></select></label>
+        </div>
+        <p id="contextNotice" role="status" aria-live="polite" style="margin:6px 0 12px;color:#667085;font-size:13px"></p>
+        <div class="type-switch"><button data-type="A1">A1</button><button data-type="A2" class="active">A2</button><button data-type="A3">A3</button></div>
+      </div>
+      <div class="tabs"><button class="tab active" data-tab="launch">Lançamento</button><button class="tab" data-tab="results">Resultados da Turma</button><button class="tab" data-tab="individual">Resultado Individual</button></div>
+      <section id="launchTab" class="tab-pane">
+        <div class="toolbar">
+          <div class="toolbar-left"><label class="btn primary file-btn">↥ Importar planilha<input id="importFile" type="file" accept=".xlsx"></label><button id="saveBtn" class="btn">▣ Salvar rascunho</button><button id="modeloBtn" class="btn" title="Baixar planilha modelo para preencher no Excel">⇩ Baixar modelo Excel</button><button id="exportBtn" class="btn">⇩ Exportar</button><button id="publishBtn" class="btn publish-btn">✓ Publicar</button></div>
+          <div class="toolbar-right"><button id="sendAllBtn" class="btn primary">Encerrar edição</button><button id="sendOneBtn" class="btn hidden">◉ Enviar individual</button></div>
+        </div>
+        <p id="draftState" class="draft-state" role="status"></p><div id="lockBanner" class="lock-banner hidden">Avaliação encerrada para edição. O administrador pode reabrir; resultados publicados estão preservados.</div>
+        <div class="table-wrap" role="region" aria-label="Planilha de notas. Role para consultar todas as quest&otilde;es." tabindex="0"><table id="scoresTable"><caption class="sr-only">Notas dos alunos na avalia&ccedil;&atilde;o selecionada</caption><thead>
+          <tr class="question-head simple-grade-head"><th scope="col" class="identity-col identity-number">#</th><th scope="col" class="identity-col identity-registration">Matrícula</th><th scope="col" class="identity-col identity-name">Nome do aluno</th>
+            <th class="question-config" data-question-key="c1"><span>Questão 1</span><small></small><em></em></th>
+            <th class="question-config" data-question-key="c2"><span>Questão 2</span><small></small><em></em></th>
+            <th class="question-config" data-question-key="c3"><span>Questão 3</span><small></small><em></em></th>
+            <th class="question-config" data-question-key="c4"><span>Questão 4</span><small></small><em></em></th>
+            <th class="question-config" data-question-key="c5"><span>Questão 5</span><small></small><em></em></th>
+            <th class="question-config" data-question-key="c6"><span>Questão 6</span><small></small><em></em></th>
+            <th class="question-config closed-question" data-question-key="me1"><span>Múltipla Escolha 1</span><small></small><em></em></th>
+            <th class="question-config closed-question" data-question-key="me2"><span>Múltipla Escolha 2</span><small></small><em></em></th>
+            <th class="question-config closed-question" data-question-key="me3"><span>Múltipla Escolha 3</span><small></small><em></em></th>
+            <th class="question-config closed-question" data-question-key="me4"><span>Múltipla Escolha 4</span><small></small><em></em></th>
+            <th>Nota da Prova</th><th class="editable-th" data-header-key="pbl1"><span>SAI 1</span></th><th class="editable-th" data-header-key="pbl2"><span>SAI 2</span></th><th class="instrument-th" data-instrument-key="osce1"><span>Estação 1</span></th><th class="instrument-th" data-instrument-key="osce2"><span>Estação 2</span></th><th class="instrument-th" data-instrument-key="osce3"><span>Estação 3</span></th><th class="instrument-th" data-instrument-key="osce4"><span>Estação 4</span></th><th class="instrument-th" data-instrument-key="osce"><span>Total OSCE</span></th><th class="editable-th" data-header-key="q7"><span>Outros 1</span></th><th class="editable-th" data-header-key="q8"><span>Outros 2</span></th><th class="editable-th" data-header-key="q9"><span>Outros 3</span></th><th class="editable-th" data-header-key="trabalho"><span>Trabalho Rev. Sist.</span></th><th>Nota Final</th><th>Status</th>
+          </tr>
+        </thead><tbody></tbody></table></div>
+        <p class="grid-legend"><span class="below-average-sample" aria-hidden="true">↓</span> Nota da Prova ou Nota Final abaixo da média da turma na coluna. É uma leitura descritiva do rascunho em tela, não um critério de aprovação.</p>
+      </section>
+      <section id="resultsTab" class="tab-pane hidden">
+        <div class="analytics-heading">
+          <div><h2>Resultados da turma</h2><p>Visão consolidada da avaliação selecionada.</p></div>
+          <label class="metric-select">Distribuição<select id="distributionMetric"><option value="final">Nota Final</option><option value="prova">Nota da Prova</option></select></label>
+        </div>
+        <div id="resultCards" class="cards results-cards"></div>
+        <div class="results-dashboard">
+          <div class="panel panel-large"><div class="panel-title"><div><h3 id="distributionTitle">Distribuição da Nota Final</h3><p>Quantidade de alunos por faixa de nota</p></div></div><div id="histChart" class="bar-chart"></div></div>
+          <div class="panel"><div class="panel-title"><div><h3>Média por instrumento de avaliação</h3><p>Média de cada instrumento utilizado e aproveitamento sobre o valor máximo declarado. A marca de 60% é referência visual.</p></div></div><div id="componentChart" class="h-chart"></div></div>
+          <div class="panel"><div class="panel-title"><div><h3>Leitura da turma</h3><p>Indicadores derivados das notas lançadas</p></div></div><div id="classInsights" class="insights"></div></div>
+        </div>
+        <div class="panel question-analysis-panel"><div class="panel-title"><div><h3>Média por questão e régua de 60%</h3><p>Valor da questão e média publicada. A régua de 60% é referência visual, não critério de aprovação.</p></div></div><div id="questionAnalysis" class="question-analysis"></div></div>
+        <div class="panel ranking-panel"><div class="panel-title"><div><h3>Ranking da turma por nota final</h3><p>Visão acadêmica da avaliação selecionada</p></div></div><div id="rankingTable"></div></div>
+      </section>
+      <section id="individualTab" class="tab-pane hidden">
+        <div class="individual-head"><label>Aluno<select id="studentSelect"></select></label><button id="sendSelectedBtn" class="btn primary hidden">Enviar resultado individual</button></div>
+        <div id="studentSummary" class="student-summary"></div>
+        <div id="individualCards" class="cards individual-cards"></div>
+        <div class="individual-dashboard">
+          <div class="panel"><div class="panel-title"><div><h3>Aluno/turma</h3><p>Comparativo das notas principais</p></div></div><div id="comparisonChart" class="compare-chart"></div></div>
+          <div class="panel"><div class="panel-title"><div><h3>Desempenho por componente</h3><p>Nota individual comparada à média da turma</p></div></div><div id="individualComponentChart" class="component-compare"></div></div>
+          <div class="panel panel-wide"><div class="panel-title"><div><h3>Detalhamento da avaliação</h3><p>Componentes da prova e atividades complementares</p></div></div><div id="individualTable"></div></div>
+        </div>
+      </section>
+    </section>
+    <section id="devView" class="content hidden"><div id="moduleView" class="mod-root hidden"></div><div class="dev-card" id="devCard"><div class="dev-icon">⚙</div><h2 id="devTitle">Módulo</h2><p>Módulo em desenvolvimento</p><button id="backA1A2" class="btn primary">Voltar para A1/A2</button></div></section>
+  </main>
+</section>
+<section id="studentScreen" class="student-app hidden">
+  <aside class="student-sidebar">
+    <div class="brand"><div class="brand-mark">S</div><div><b>SUPREMA</b><small>Área do aluno</small></div></div>
+    <div class="student-menu-title">Minhas notas</div><button id="refreshStudentBtn" class="btn student-refresh">Atualizar resultados</button>
+    <div id="studentModuleNav"></div>
+    <div id="studentAssessmentSwitch" class="student-assessment-switch"></div>
+  </aside>
+  <main class="student-main">
+    <header class="topbar student-topbar"><div><b>Avaliação Suprema</b><small id="studentContext"></small></div><div class="profile"><span id="studentName">Aluno</span><button type="button" class="change-password-btn">Alterar senha</button><button id="studentLogoutBtn">Sair</button></div></header>
+    <section id="studentResultBody" class="student-content"></section>
+    <section id="studentModuleView" class="student-content mod-root hidden"></section>
+  </main>
+</section>
+<section id="adminScreen" class="app hidden">
+ <aside class="sidebar"><div class="brand"><div class="brand-mark">S</div><div><b>SUPREMA</b><small>Administração</small></div></div>
+ <nav id="adminNav"><button class="nav-item active" data-admin-view="dashboard">▣ <span>Visão geral</span></button><button class="nav-item" data-admin-view="users">♙ <span>Usuários</span></button><button class="nav-item" data-admin-view="courses">▤ <span>Cursos</span></button><button class="nav-item" data-admin-view="disciplines">▥ <span>Disciplinas</span></button><button class="nav-item" data-admin-view="assignments">◎ <span>Professores e vínculos</span></button><button class="nav-item" data-admin-view="enrollments">◈ <span>Matrículas</span></button><button class="nav-item" data-admin-view="assessments">▦ <span>Avaliações</span></button><button class="nav-item" data-admin-view="controls">⚙ <span>Controle operacional</span></button><button class="nav-item" data-admin-view="audit">◷ <span>Histórico</span></button><button class="nav-item" id="adminEvolutionBtn" type="button">▤ <span>Evolução Acadêmica</span></button></nav>
+ </aside><main class="main"><header class="topbar"><div><b>Avaliação Suprema · Administração</b></div><div class="profile"><span id="adminName">Administrador</span><button type="button" class="change-password-btn">Alterar senha</button><button id="adminLogoutBtn">Sair</button></div></header><section class="content"><div id="adminContent"></div><section id="adminEvolutionContent" class="hidden" aria-label="Evolução Acadêmica"></section><section id="adminModuleView" class="mod-root hidden"></section></section></main>
+</section>
+<section id="profileScreen" class="app hidden">
+ <aside class="sidebar"><div class="brand"><div class="brand-mark">S</div><div><b>SUPREMA</b><small id="profileRole">Perfil</small></div></div><nav id="profileNav"></nav></aside>
+ <main class="main"><header class="topbar"><div><b>Avaliação Suprema</b></div><div class="profile"><span id="profileName">Usuário</span><button type="button" class="change-password-btn">Alterar senha</button><button id="profileLogoutBtn">Sair</button></div></header>
+ <section class="content mod-root" id="profileContent"><div class="dev-card"><div class="dev-icon">⚙</div><h2 id="profileTitle">Perfil</h2><p>Os módulos deste perfil ainda estão em desenvolvimento.</p><p>Seu acesso já está criado. Você pode alterar a senha no botão acima.</p></div></section></main>
+</section>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<script src="/shared/api-client.js"></script>
+<script src="/shared/service-status.js"></script>
+<script src="/shared/ui.js"></script>
+<script src="/features/importacao-alunos/student-import.js"></script>
+<script src="/features/administracao/admin.js"></script>
+<script src="/features/osce/osce.js"></script>
+<script src="/features/avaliacao-docente/docente.js"></script>
+<script src="/features/articulacao/articulacao.js"></script>
+<script src="/features/comprovantes/comprovantes.js"></script>
+<script src="/features/avaliacoes/app.js"></script>
+<script src="/features/avaliacoes/planilha-expandida.js"></script>
+<script src="/features/indicadores/analytics.js"></script>
+<script src="/features/evolucao/analytics.js"></script>
+<script src="/features/academico/academico.js"></script>
+</body>
+</html>

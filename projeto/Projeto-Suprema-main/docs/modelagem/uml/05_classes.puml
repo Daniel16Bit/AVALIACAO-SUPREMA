@@ -1,0 +1,173 @@
+@startuml Classes_Dominio
+skinparam shadowing false
+skinparam classAttributeIconSize 0
+hide empty members
+title Avaliação Suprema — Diagrama de Classes do Domínio (modelo conceitual, versão A1/A2)
+
+package "Usuários" {
+  abstract class Usuario {
+    - id : Inteiro
+    - nome : Texto
+    - email : Texto
+    - login : Texto
+    - senhaHash : Texto
+    - ativo : Booleano
+    - dataCadastro : DataHora
+    + verificarSenha(senha : Texto) : Booleano
+    + desativar() : void
+    + reativar() : void
+    + estaAtivo() : Booleano
+  }
+  class Administrador {
+    + cadastrarUsuario(dados : DadosUsuario) : Usuario
+    + redefinirSenha(u : Usuario) : void
+    + vincularProfessor(p : Professor, d : Disciplina, periodo : Texto) : VinculoDocente
+    + vincularAluno(a : Aluno, d : Disciplina, periodo : Texto) : VinculoDiscente
+    + encerrarVinculo(v : VinculoAcademico, data : Data) : void
+  }
+  class Professor {
+    - registroFuncional : Texto [0..1]
+    + disciplinasAutorizadas(periodo : Texto) : List<Disciplina>
+    + podeAcessar(d : Disciplina) : Booleano
+  }
+  class Aluno {
+    - matricula : Texto
+    + disciplinasCursadas(periodo : Texto) : List<Disciplina>
+    + resultadosPublicados() : List<Resultado>
+  }
+}
+
+package "Estrutura acadêmica" {
+  class Curso {
+    - id : Inteiro
+    - codigo : Texto
+    - nome : Texto
+    - ativo : Booleano
+    + adicionarDisciplina(d : Disciplina) : void
+    + desativar() : void
+  }
+  class Disciplina {
+    - id : Inteiro
+    - codigo : Texto
+    - nome : Texto
+    - ativo : Booleano
+    + professoresVigentes(periodo : Texto) : List<Professor>
+    + alunosVigentes(periodo : Texto) : List<Aluno>
+    + avaliacao(tipo : TipoAvaliacao, periodo : Texto) : Avaliacao
+  }
+  abstract class VinculoAcademico {
+    - id : Inteiro
+    - periodoLetivo : Texto
+    - dataInicio : Data
+    - dataFim : Data [0..1]
+    + estaVigente() : Booleano
+    + encerrar(data : Data) : void
+  }
+  class VinculoDocente
+  class VinculoDiscente
+}
+
+package "Avaliações A1/A2" {
+  enum TipoAvaliacao {
+    A1
+    A2
+  }
+  enum SituacaoResultado {
+    RASCUNHO
+    PUBLICADO
+  }
+  class Avaliacao {
+    - id : Inteiro
+    - tipo : TipoAvaliacao
+    - periodoLetivo : Texto
+    - descricao : Texto [0..1]
+    - dataAplicacao : Data [0..1]
+    + adicionarQuestao(numero : Inteiro, valorMaximo : Decimal [0..1]) : Questao
+    + resultadoDe(a : Aluno) : Resultado
+    + pendencias() : List<Aluno>
+    + publicar(por : Professor, r : List<Resultado>) : PublicacaoResultado
+  }
+  class Questao {
+    - id : Inteiro
+    - numero : Inteiro
+    - enunciado : Texto [0..1]
+    - valorMaximo : Decimal [0..1]
+    + aceita(valor : Decimal) : Booleano
+  }
+  class Resultado {
+    - id : Inteiro
+    - situacao : SituacaoResultado
+    - /notaTotal : Decimal [0..1]
+    - ultimaAlteracao : DataHora
+    + registrarNota(q : Questao, valor : Decimal, por : Professor) : Nota
+    + estaCompleto() : Booleano
+    + estaPublicado() : Booleano
+    ~ marcarPublicado(p : PublicacaoResultado) : void
+  }
+  class Nota {
+    - id : Inteiro
+    - valor : Decimal
+    - registradaEm : DataHora
+    - alteradaEm : DataHora [0..1]
+    - versao : Inteiro
+    + alterar(novoValor : Decimal, por : Professor) : void
+  }
+  class PublicacaoResultado <<imutável>> {
+    - id : Inteiro
+    - dataHora : DataHora
+    - observacao : Texto [0..1]
+    + quantidadeResultados() : Inteiro
+  }
+}
+
+Usuario <|-- Administrador
+Usuario <|-- Professor
+Usuario <|-- Aluno
+
+VinculoAcademico <|-- VinculoDocente
+VinculoAcademico <|-- VinculoDiscente
+
+Curso "1" o-- "0..*" Disciplina : oferece >
+Aluno "0..*" -- "1" Curso : cursa >
+Professor "1" -- "0..*" VinculoDocente : leciona por >
+Aluno "1" -- "0..*" VinculoDiscente : cursa por >
+VinculoAcademico "0..*" -- "1" Disciplina : refere-se a >
+
+Disciplina "1" -- "0..*" Avaliacao : possui >
+Avaliacao "1" *-- "1..*" Questao : compõe-se de >
+Avaliacao "1" *-- "0..*" Resultado : gera >
+Resultado "0..*" -- "1" Aluno : pertence a >
+Resultado "1" *-- "0..*" Nota : contém >
+Nota "0..*" -- "1" Questao : avalia >
+Nota "0..*" -- "1" Professor : lançada por >
+
+PublicacaoResultado "0..*" -- "1" Avaliacao : publica >
+PublicacaoResultado "0..1" -- "1..*" Resultado : torna visível >
+PublicacaoResultado "0..*" -- "1" Professor : realizada por >
+
+Administrador ..> VinculoAcademico : <<cria / encerra>>
+Administrador ..> Usuario : <<mantém>>
+
+note top of Resultado
+  {único por (avaliacao, aluno)}
+  {aluno tem VinculoDiscente vigente em
+   avaliacao.disciplina no avaliacao.periodoLetivo}
+  {/notaTotal: regra de consolidação pendente (RP03)}
+end note
+
+note bottom of Nota
+  {único por (resultado, questao)}
+  {questao.avaliacao = resultado.avaliacao}
+  {alterar() só se resultado.situacao = RASCUNHO}
+end note
+
+note bottom of PublicacaoResultado
+  {readOnly}
+  {todos os resultados são da mesma avaliação}
+  {professor com VinculoDocente vigente na disciplina}
+end note
+
+note bottom of Avaliacao
+  {único por (disciplina, tipo, periodoLetivo)} (H03)
+end note
+@enduml

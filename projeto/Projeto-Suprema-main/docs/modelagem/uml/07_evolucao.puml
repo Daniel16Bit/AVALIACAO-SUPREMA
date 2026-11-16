@@ -1,0 +1,86 @@
+@startuml Evolucao_Modalidades
+skinparam shadowing false
+skinparam classAttributeIconSize 0
+hide empty members
+left to right direction
+skinparam nodesep 30
+skinparam ranksep 70
+title Proposta de evolução — novas modalidades sem reconstruir o núcleo
+skinparam class {
+  BackgroundColor<<previsto>> #F4F4F4
+  BorderColor<<previsto>> #999999
+  BorderStyle<<previsto>> dashed
+}
+
+package "Núcleo (inalterado)" {
+  class Disciplina
+  class Aluno
+  class Professor
+  class Resultado
+  class Nota
+  class PublicacaoResultado
+}
+
+package "Avaliações (refatoração localizada)" {
+  abstract class Avaliacao {
+    - periodoLetivo : Texto
+  }
+  abstract class ItemAvaliativo {
+    - ordem : Inteiro
+    - valorMaximo : Decimal [0..1]
+  }
+  class AvaliacaoPorQuestoes {
+    - tipo : TipoAvaliacao
+  }
+  class Questao
+}
+
+package "Expansões previstas" {
+  class AvaliacaoOSCE <<previsto>>
+  class Estacao <<previsto>>
+  class CriterioEstacao <<previsto>>
+  class AvaliacaoInterdisciplinar <<previsto>>
+}
+
+package "Avaliação Docente (módulo separado)" {
+  class InstrumentoAvaliacaoDocente <<previsto>>
+  class PerguntaInstrumento <<previsto>>
+  class RespostaAvaliacaoDocente <<previsto>>
+}
+
+Avaliacao <|-- AvaliacaoPorQuestoes
+Avaliacao <|-- AvaliacaoOSCE
+Avaliacao <|-- AvaliacaoInterdisciplinar
+ItemAvaliativo <|-- Questao
+ItemAvaliativo <|-- CriterioEstacao
+
+Disciplina "1" -- "0..*" Avaliacao : principal >
+AvaliacaoInterdisciplinar "0..*" -- "2..*" Disciplina : integra >
+AvaliacaoPorQuestoes "1" *-- "1..*" Questao
+AvaliacaoOSCE "1" *-- "1..*" Estacao
+Estacao "1" *-- "1..*" CriterioEstacao
+Estacao "0..*" -- "0..*" Professor : avaliador >
+
+Avaliacao "1" *-- "0..*" Resultado
+Resultado "0..*" -- "1" Aluno
+Resultado "1" *-- "0..*" Nota
+Nota "0..*" -- "1" ItemAvaliativo : avalia >
+PublicacaoResultado "0..*" -- "1" Avaliacao
+
+InstrumentoAvaliacaoDocente "1" *-- "1..*" PerguntaInstrumento
+InstrumentoAvaliacaoDocente "0..*" -- "1" Disciplina : aplicado em >
+RespostaAvaliacaoDocente "0..*" -- "1" InstrumentoAvaliacaoDocente
+RespostaAvaliacaoDocente "0..*" -- "1" Professor : avalia >
+
+note bottom of AvaliacaoOSCE
+  Estações, critérios e avaliadores são
+  hipóteses de estrutura; regras de
+  pontuação ainda não definidas.
+end note
+
+note bottom of RespostaAvaliacaoDocente
+  Autoria e anonimato a definir (RP17).
+  Não reutiliza Resultado: o avaliado
+  é o professor, não o aluno.
+end note
+@enduml

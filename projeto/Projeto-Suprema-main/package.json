@@ -1,0 +1,53 @@
+{
+  "name": "avaliacao-suprema",
+  "version": "12.2.0",
+  "private": true,
+  "description": "Avaliacao Suprema com interface e API independentes",
+  "main": "server.js",
+  "workspaces": [
+    "apps/api",
+    "apps/web"
+  ],
+  "scripts": {
+    "start": "node --env-file-if-exists=.env scripts/start.js",
+    "iniciar": "npm start",
+    "dev": "npm start",
+    "start:api": "node --env-file-if-exists=.env apps/api/server.js",
+    "start:web": "node --env-file-if-exists=.env apps/web/server.js",
+    "admin": "node --env-file-if-exists=.env scripts/admin.js",
+    "backup": "node --env-file-if-exists=.env scripts/backup.js",
+    "restore": "node --env-file-if-exists=.env scripts/restore.js",
+    "check": "node scripts/check.js",
+    "lint": "eslint . --max-warnings 0",
+    "test": "npm run check && npm run lint && npm run format:check && npm run test:isolamento && npm run test:seguranca && npm run test:fundacoes && npm run test:operacao && npm run test:principal && npm run test:osce && npm run test:docente && npm run test:comprovantes && npm run test:articulacao && npm run test:api && npm run test:usuarios && npm run test:importacao && npm run test:matriculas",
+    "docs:schema": "node scripts/schema-doc.js",
+    "format": "prettier --write \"**/*.{js,css}\"",
+    "format:check": "prettier --check \"**/*.{js,css}\"",
+    "test:isolamento": "node --test tests/architecture/*.test.js",
+    "test:seguranca": "node --test tests/integration/seguranca_login.test.js",
+    "test:fundacoes": "node --test tests/integration/migracoes.test.js tests/integration/sessoes.test.js tests/integration/perfis.test.js tests/integration/historico_notas.test.js tests/integration/esquema_documentado.test.js",
+    "test:operacao": "node --test tests/integration/transporte.test.js tests/integration/backup.test.js tests/integration/dependencias.test.js",
+    "test:principal": "node --test tests/integration/importacao_notas.test.js tests/integration/agregados_aluno.test.js tests/integration/instrumentos.test.js tests/integration/modalidades.test.js tests/integration/calculo_tela.test.js",
+    "test:osce": "node --test tests/integration/osce.test.js tests/integration/calculo_osce.test.js",
+    "test:docente": "node --test tests/integration/avaliacao_docente.test.js",
+    "test:comprovantes": "node --test tests/integration/comprovantes.test.js",
+    "test:articulacao": "node --test tests/integration/articulacao.test.js tests/integration/calculo_articulacao.test.js",
+    "test:api": "node tests/integration/teste_api.js",
+    "test:usuarios": "node tests/integration/teste_usuarios.js",
+    "test:importacao": "node tests/integration/teste_importacao_alunos.js",
+    "test:matriculas": "node tests/integration/teste_matriculas_periodo.js"
+  },
+  "engines": {
+    "node": ">=22.16.0"
+  },
+  "overrides": {
+    "exceljs": {
+      "uuid": "^11.1.1"
+    }
+  },
+  "devDependencies": {
+    "eslint": "^9.39.5",
+    "globals": "^17.14.0",
+    "prettier": "3.10.1"
+  }
+}

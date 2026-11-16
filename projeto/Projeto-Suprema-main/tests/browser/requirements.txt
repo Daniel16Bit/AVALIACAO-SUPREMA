@@ -1,0 +1,3 @@
+# Dependencia do teste de navegador (tests/browser/smoke.py). Nao e necessaria para instalar o sistema.
+# Depois de instalar: python -m playwright install chromium
+playwright==1.65.1

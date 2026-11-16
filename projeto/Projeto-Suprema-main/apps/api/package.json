@@ -1,0 +1,13 @@
+{
+  "name": "@suprema/api",
+  "version": "11.9.0",
+  "private": true,
+  "main": "server.js",
+  "scripts": {
+    "start": "node --env-file-if-exists=../../.env server.js"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "exceljs": "^4.4.0"
+  }
+}
