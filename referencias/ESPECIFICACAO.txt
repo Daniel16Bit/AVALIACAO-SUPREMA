@@ -1,0 +1,464 @@
+DOCUMENTO-BASE PARA RECONSTRUÇÃO INDEPENDENTE
+
+# AVALIAÇÃO SUPREMA
+
+Especificação funcional, técnica e critérios de equivalência para implementação por outra inteligência artificial
+
+Versão do documento: 1.0  |  11 de novembro de 2026
+
+Destinatário: Claude (IA responsável pela implementação comparativa)
+
+Referência: pacote AVALIACAO_SUPREMA_3_PERIODO_DEMO_PRONTO.zip e solicitações registradas na reunião de 06/11/2026.
+
+## INSTRUÇÃO PRINCIPAL PARA A IA
+
+Construir, de forma independente, um sistema Web institucional denominado Avaliação Suprema, funcionalmente equivalente ao protótipo de referência, preservando as regras acadêmicas, os fluxos administrativos, o lançamento e a publicação de notas, os dashboards e o isolamento dos dados entre perfis. A implementação deve ser original, executável, versionada e testada. Não declare um recurso implementado apenas por criar uma tela ou mockup. Diferencie claramente funcionalidades já presentes no protótipo, requisitos de evolução e itens ainda pendentes de decisão. Não copie credenciais, nomes pessoais, matrículas ou dados reais do ZIP para código, prompts, testes ou repositórios.
+
+## Como interpretar este documento
+
+- [ATUAL] = comportamento identificado no código, nas telas ou no banco do protótipo de referência.
+
+- [EVOLUÇÃO] = requisito aprovado como direção técnica para a versão institucional ou melhoria solicitada em reunião, ainda não comprovadamente pronta.
+
+- [PENDENTE] = decisão acadêmica/visual necessária; não inventar regra ou implementar por suposição.
+
+- [RECOMENDAÇÃO] = arquitetura e padrões técnicos para robustez; não são uma afirmação sobre o estado atual.
+
+## 1. Escopo, objetivo e limites
+
+Plataforma de gestão de avaliações e acompanhamento acadêmico para uso por professores, estudantes, coordenação e administração da Suprema. O TOTVS RM permanece como sistema oficial de gestão acadêmica; o Avaliação Suprema é o sistema complementar de avaliações, lançamento de notas, análise de desempenho e acompanhamento longitudinal. A integração bidirecional com o RM não está implementada no protótipo e deve ser tratada como fase futura, condicionada às APIs, autorizações e regras aprovadas pela instituição.
+
+- Implementar uma versão de produção, e não apenas uma réplica visual.
+
+- Suportar múltiplas turmas, cursos, disciplinas, professores, períodos, anos e semestres, com integridade dos vínculos.
+
+- Operar com dados fictícios ou anonimizados para desenvolvimento/homologação.
+
+- Preservar a separação entre rascunho e publicação; nunca expor notas provisórias ao estudante.
+
+- Entregar código-fonte, scripts de instalação, documentação de API, migrações, dados de teste, testes automatizados e instruções de operação.
+
+## 2. Fotografia verificável do banco de demonstração
+
+| Indicador | Quantidade encontrada | Interpretação |
+| --- | --- | --- |
+| Contas de usuário | 335 | 1 ADMIN, 4 PROFESSOR, 330 ALUNO |
+| Registros de estudantes | 352 | Não equivale a 352 contas ativas |
+| Avaliações | 17 | 6 A1, 6 A2, 3 A3 e 2 registros legados A3 de A1/A2 |
+| Linhas de notas em rascunho | 473 | Registros em scores, preenchidos ou não |
+| Linhas em published_scores | 286 | Destas, 188 estão com sent=1 |
+| Eventos de publicação | 5 | Registros históricos na tabela publication_events |
+| Cursos / disciplinas | 1 / 5 | Fotografia da demonstração |
+| Vínculos docentes / matrículas | 5 / 145 | Fotografia da demonstração |
+
+IMPORTANTE: esses números são uma fotografia dos dados do ZIP e NÃO representam capacidade máxima, licença, requisito de simultaneidade ou universo total de alunos da instituição. O pacote inclui um recorte de demonstração para 3º período, ano 2026, semestre 2, com Microbiologia, Bioquímica e Histologia Geral nas avaliações A1/A2. Não copiar dados pessoais presentes no pacote para a nova implementação.
+
+## 3. Perfis e permissões
+
+| Perfil | Capacidades obrigatórias | Restrições |
+| --- | --- | --- |
+| ADMIN | Gerir usuários, cursos, disciplinas, vínculos, matrículas, avaliações, controles operacionais, auditoria e informações administrativas. | Ações privilegiadas auditadas; nenhum acesso anônimo. |
+| PROFESSOR | Visualizar suas avaliações/vínculos; configurar questões; lançar/importar notas; salvar rascunho; publicar; consultar estatísticas e resultados. | Somente avaliações e estudantes ligados ao seu contexto autorizado. |
+| ALUNO / ESTUDANTE | Consultar suas próprias avaliações A1/A2/A3 publicadas, gráficos e evolução. | Nunca acessar rascunhos, dados de colegas ou endpoint docente. |
+| COORDENAÇÃO | [EVOLUÇÃO] Perfil específico a definir conforme decisões institucionais. | Não presumir permissões de administrador ou professor. |
+
+[ATUAL] Login por e-mail ou matrícula; senha; sessão autenticada; logout. O protótipo usa scrypt com salt para senha, cookie HttpOnly/SameSite Strict, sessão em memória com duração de 8 horas, proteção básica contra tentativas excessivas e verificação de perfil por endpoint. [EVOLUÇÃO] Adotar sessão durável ou mecanismo seguro compatível com ambiente multi-instância, HTTPS obrigatório, gestão centralizada de segredos, proteção CSRF conforme arquitetura, recuperação segura de conta, autorização por recurso, registros de auditoria, políticas de sessão e rotinas de revisão de acessos.
+
+## 4. Navegação e interface geral
+
+1. Tela de login: identidade visual Avaliação Suprema; campos e-mail/matrícula e senha; validação e mensagens genéricas.
+
+1. Menu pós-login: módulo Avaliação A1/A2/A3 ativo; “Avaliação Docente”, “Avaliação OSCE” e “Articulação Interdisciplinar” aparecem no protótipo como “Em desenvolvimento”; não confundir atalhos com módulos concluídos.
+
+1. Professor: seletores Ano, Semestre, Período, Disciplina; botões A1, A2, A3; abas Lançamento, Resultados da Turma, Resultado Individual; atalho Evolução Acadêmica.
+
+1. Aluno: filtros Ano, Semestre, Período e Disciplina; navegação entre A1/A2/A3; visualização de notas e indicadores somente publicados; componentes de evolução longitudinal.
+
+1. Admin: navegação Visão Geral, Usuários, Cursos, Disciplinas, Professores e vínculos, Matrículas, Avaliações, Controle operacional, Histórico e Evolução Acadêmica.
+
+1. Layout responsivo com desktop prioritário e versão móvel utilizável; acessibilidade com labels, foco de teclado, contraste, estados de vazio/erro/carregamento e tabelas legíveis.
+
+## 5. Modelo acadêmico e hierarquia de dados
+
+Hierarquia funcional proposta: Curso → Disciplina (associada a período) → Oferta/turma (ano, semestre e identificador de turma) → Vínculo professor/disciplina/oferta → Matrícula estudante/oferta → Avaliações A1/A2/A3 → Configuração de questões e instrumentos → Notas individuais → Publicações → Painéis e histórico.
+
+- Um estudante pode participar de múltiplas disciplinas, turmas e períodos; o cadastro mestre não deve ser confundido com a matrícula em uma oferta.
+
+- Um docente só pode editar avaliação ligada ao próprio vínculo; permitir inativação de vínculos com regras de integridade e histórico.
+
+- Criar/atualizar avaliação A1/A2/A3 para cada contexto autorizado; não duplicar por repetição de sincronização.
+
+- Usar identificadores estáveis, chaves únicas e transações; impedir duplicidade de matrícula, vínculo e nota aluno/avaliação.
+
+- Preservar registros históricos quando curso, disciplina, professor ou matrícula forem desativados.
+
+- O período do aluno isoladamente não prova matrícula em uma disciplina: exigir vínculo acadêmico explícito.
+
+## 6. Cadastro administrativo
+
+### 6.1 Usuários
+
+- Cadastrar, listar, editar, ativar/inativar e excluir conforme regras de impacto.
+
+- Campos existentes no banco: nome, e-mail, matrícula, papel, ativo, senha protegida, vínculo opcional a estudante e versão de sessão.
+
+- Redefinir senha com autorização administrativa e invalidação de sessões.
+
+- Mostrar impacto antes de exclusões que possam afetar avaliações/vínculos.
+
+### 6.2 Cursos e disciplinas
+
+- CRUD de cursos com nome único e ativo/inativo.
+
+- Disciplinas associadas ao curso, nome, período e ativo/inativo; evitar duplicidade por curso/nome/período.
+
+### 6.3 Docentes e matrículas
+
+- Relacionar professor, disciplina, ano, semestre e turma.
+
+- Matricular/desmatricular estudantes em ofertas; suportar matrícula em lote por período somente após validação do escopo.
+
+- Atualizar listas de alunos nas avaliações de forma idempotente.
+
+### 6.4 Controles institucionais
+
+- Bloqueios operacionais de edição/publicação; encerramento e reabertura de avaliações por administrador autorizado.
+
+- Histórico auditável de alterações de dados e controles.
+
+## 7. Avaliações A1, A2 e A3
+
+[ATUAL] Cada avaliação possui tipo, ano, semestre, período, disciplina, turma, professor, vínculo acadêmico opcional, status de bloqueio, revisão de rascunho e revisão publicada. A interface oferece A1/A2/A3. O banco contém ainda nomenclaturas legadas “A3 de A1” e “A3 de A2”, que precisam de tratamento migratório sem inventar regra de substituição de nota.
+
+- Selecionar o contexto acadêmico e carregar somente estudantes efetivamente matriculados.
+
+- Apresentar grade de lançamento com colunas configuráveis para instrumentos e cabeçalhos.
+
+- Permitir edição de nomes de cabeçalhos já suportados e configuração de área de conhecimento, tipo da questão e nota máxima quando disponível.
+
+- Salvar rascunhos sem liberação de resultados aos estudantes.
+
+- Publicar uma fotografia dos resultados e metadados válidos, com carimbo temporal e evento de auditoria.
+
+- Encerrar edição somente após publicação consistente; permitir reabertura administrativa auditada.
+
+- Detectar alterações simultâneas via número de revisão e informar conflito (HTTP 409), sem sobrescrever silenciosamente.
+
+## 8. Componentes de nota e regra de cálculo atual
+
+| Grupo | Campos técnicos presentes | Notas |
+| --- | --- | --- |
+| Questões discursivas | c1, c2, c3, c4, c5, c6 | Configuração de área e valor máximo por questão. |
+| Múltipla escolha | me1, me2, me3, me4 | Quatro campos existentes; expansão dinâmica está pendente. |
+| Outros | q7, q8, q9, q10 | q7 a q9 entram na soma; q10 é legado e não entra no total atual. |
+| SAI | pbl1, pbl2 | Exibidos no código como SAI 1 e SAI 2. |
+| OSCE | osce1..osce4, osce | Se houver estações, osce é subtotal derivado; se não, pode ser valor direto. |
+| Outros instrumentos | trabalho, outros_final | Trabalho de revisão sistemática e outros. |
+| Derivados | nota_prova, nota_final | Calculados no backend; não confiar em total enviado pelo navegador. |
+
+FÓRMULA [ATUAL]: nota_prova = soma de c1..c6 e me1..me4, quando houver algum campo preenchido nesses grupos. OSCE = soma osce1..osce4 se houver estações preenchidas; senão, valor de osce quando existente. Nota final = soma c1..c6 + me1..me4 + q7..q9 + pbl1 + pbl2 + osce (calculado) + trabalho + outros_final, desde que algum componente esteja preenchido. Campos ausentes são tratados como zero na soma; resultado é arredondado a duas casas. O campo q10 não integra essa soma. Não somar osce1..osce4 novamente além do subtotal osce.
+
+ATENÇÃO: o protótipo valida notas individuais como números não negativos e não implementa uma regra institucional única “nota final sempre de 0 a 10”. Não impor limite ou pesos por suposição. Na versão robusta, criar regras configuráveis e validadas por avaliação/instrumento, de acordo com aprovação acadêmica, preservando a compatibilidade com avaliações históricas.
+
+## 9. Configuração de questões e publicação
+
+- [ATUAL] Chaves configuráveis para c1..c6 e me1..me4; tipo de questão, área de conhecimento e nota máxima.
+
+- [ATUAL] A publicação exige, para questões efetivamente usadas, área de conhecimento preenchida e valor máximo positivo; caso contrário, rejeitar e listar pendências.
+
+- [ATUAL] Publicação armazena metadados (cabeçalhos/configuração/contexto) junto ao resultado, evitando reinterpretar histórico com configurações futuras.
+
+- [ATUAL] Publicação não equivale a “salvar”; alterações não publicadas ficam invisíveis ao aluno.
+
+- [EVOLUÇÃO] Campo de ponto de corte por questão/área/instrumento e opção ativo/inativo, com semântica a validar com a coordenação.
+
+- [EVOLUÇÃO] Nota máxima explícita de OSCE, SAI, trabalho e demais instrumentos, com validação de limites e escala de gráficos.
+
+- [PENDENTE] Quantidade dinâmica de colunas de múltipla escolha: não implementar antes de decidir limites, nomenclatura, importação e fórmula.
+
+- [PENDENTE] Link de gabarito mínimo: origem, hospedagem, permissões e associação à avaliação não definidos.
+
+## 10. Planilhas Excel: exportação, importação e colagem
+
+1. Exportar modelo .xlsx adequado à turma/avaliação, com identificadores de estudante, contexto e colunas de notas.
+
+1. Importar planilha com validações de formato, tamanho, nomes de campos, duplicidades, números e vínculo acadêmico; associar por matrícula, não apenas nome.
+
+1. Exibir pré-visualização/relatório de diferenças e erros antes de confirmar; permitir cancelamento sem alterações parciais.
+
+1. Confirmar importação em transação e como rascunho, sem publicação automática.
+
+1. Permitir colagem de células copiadas do Excel quando o layout e as chaves forem compatíveis, validando cada linha.
+
+1. Exportar resultados autorizados preservando cabeçalhos e status; nunca exportar dados além do escopo do usuário.
+
+1. Fornecer modelo fictício, testes para duplicidade, linha ausente, aluno não matriculado, valor inválido, arquivo malformado e alteração concorrente.
+
+[ATUAL] Existem rotas de importar, confirmar e exportar avaliações, além de rotas administrativas de prévia/revisão/confirmação de importação de estudantes; dependência exceljs e componentes de interface dedicados. A funcionalidade exata de cada formato de arquivo deve ser coberta por testes antes de declarar equivalência plena.
+
+## 11. Painel do professor — gráficos obrigatórios
+
+| Visualização | Origem / cálculo | Comportamento requerido |
+| --- | --- | --- |
+| Distribuição de nota final | Notas finais publicadas da turma | Histograma ou distribuição em faixas, com seleção nota final/nota da prova. |
+| Média por instrumento | Médias por campos configurados | Comparar componentes avaliativos; indicar falta de dados e escalas. |
+| Média por questão | Nota média por c1..c6/me1..me4 e máximo | Mostrar referência de 60% quando a base percentual for válida. |
+| Ranking da turma | Nota final publicada ordenada | Restrito a professor autorizado; ordenar com tratamento de empates. |
+| Aluno × turma | Resultado individual vs agregado | Comparar sem expor identidade de colegas. |
+| Desempenho por componente | Questões/instrumentos da avaliação | Colunas ou radar conforme contexto. |
+| Radar / gráfico de teia | Percentuais relativos aos máximos configurados | Comparar áreas com escala homogênea, não notas brutas heterogêneas. |
+| Evolução acadêmica | Avaliações publicadas em séries temporais | Comparar por percentual apenas onde os máximos históricos forem verificáveis. |
+
+Indicadores estatísticos disponíveis no backend: quantidade de resultados preenchidos, médias da prova e nota final, desvio-padrão amostral, mediana, número acima/abaixo da média da turma, médias por componente e máximos configurados. Destacar explicitamente quando a amostra for pequena ou quando um instrumento não possuir máximo válido.
+
+## 12. Painel do estudante — informações obrigatórias
+
+- Login individual e acesso somente aos resultados publicados vinculados ao student_id autenticado.
+
+- Filtros Ano, Semestre, Período, Disciplina; botões A1/A2/A3; acesso direto aos gráficos da disciplina.
+
+- Exibir “Minha nota”, nota da prova, indicadores da turma sem expor notas individuais de outros estudantes, posição/colocação quando autorizada, e detalhamento por questão.
+
+- Gráfico “Aluno/turma” comparando resultado individual e referência agregada da turma.
+
+- Gráficos de teia/radar mostrando “Onde estou” e desempenho por área/instrumento.
+
+- Evolução entre A1/A2/A3 e períodos/semestres, sinalizando lacunas quando não houver máximo histórico válido.
+
+- Usar escala de nota (ex.: 6,2) nos componentes definidos para nota, mas manter percentual nos gráficos que a coordenação pediu explicitamente.
+
+- Exibir situações sem dados, sem publicação, sem matrícula e falta de máximo configurado com mensagens distintas; não exibir notas provisórias.
+
+- Consulta de resultados somente por identidade do usuário logado, nunca aceitando um student_id arbitrário vindo do navegador.
+
+## 13. Requisitos da reunião de 06/11/2026
+
+### 13.1 Perfil docente
+
+| Pedido da reunião | Status para a reconstrução |
+| --- | --- |
+| Acrescentar colunas de múltipla escolha | [PENDENTE] Aguardar decisão; não criar regra arbitrária. |
+| Valor máximo das estações OSCE, SAI e trabalho | [EVOLUÇÃO] Implementar após validação de escala. |
+| Ponto de corte e ativo/inativo | [EVOLUÇÃO] Definir onde incide e se é obrigatório. |
+| Cor para nota abaixo da média na planilha | [EVOLUÇÃO] Condicional, acessível e não apenas por cor. |
+| Aba total após articulação interdisciplinar | [EVOLUÇÃO] Fórmula de total a ser homologada. |
+| Gráficos de SAI, OSCE e avaliações práticas | [EVOLUÇÃO] Separar instrumentos e compará-los por máximo. |
+| Link do gabarito mínimo | [PENDENTE] Aguardar definição. |
+| Gráfico de teia prática, teórica e múltipla escolha | [EVOLUÇÃO] Agrupar modalidades com base percentual definida. |
+
+### 13.2 Perfil do estudante
+
+| Pedido da reunião | Critério de apresentação |
+| --- | --- |
+| “Aluno x turma” → “Aluno/turma” | Troca literal de rótulo. |
+| Preferência pela apresentação no canto superior direito | [EVOLUÇÃO] Exige referência visual antes de fechar o layout. |
+| Gráfico da esquerda à direita; começar por total | [EVOLUÇÃO] Ordem: total → estratificações. |
+| “Onde estou” no radar | Rotular participação do estudante no gráfico. |
+| “Nota final” → “Minha nota” | Troca literal de rótulo. |
+| “Prova” → “Avaliação” | Aplicar na interface onde for rótulo acadêmico, sem alterar chaves legadas. |
+| Retirar “Avaliações publicadas” do login aluno | Simplificar interface, preservando filtro de publicação no backend. |
+| 62% → 6,2 em locais de nota | Conversão somente quando a escala correta for 0–10. |
+| “Minhas disciplinas” → “Minhas notas” | Troca literal de rótulo. |
+| Nome das disciplinas no gráfico de barras | Rótulos claros e legíveis. |
+| Manter percentual nos gráficos | Não converter todos os gráficos para notas. |
+| Linha pontilhada em 60% | Exibir referência visual de percentual. |
+| Abrir disciplina e ver gráficos | Navegação direta ao dashboard filtrado. |
+
+## 14. Banco de dados: entidades e restrições
+
+| Entidade/tabela do protótipo | Responsabilidade |
+| --- | --- |
+| users | Contas, perfis, hash de senha, vínculo student_id, status |
+| students | Estudantes e matrícula acadêmica |
+| academic_courses | Cursos institucionais |
+| academic_disciplines | Disciplinas e período |
+| teaching_assignments | Ofertas/vínculos professor-disciplina-ano-semestre-turma |
+| academic_enrollments | Matrículas estudantes/ofertas |
+| assessments | A1/A2/A3, revisão e status de bloqueio |
+| assessment_headers | Cabeçalhos personalizados |
+| assessment_question_config | Tipo, área e máximo por questão |
+| scores | Notas em edição/rascunho |
+| published_scores | Snapshot de notas publicadas e metadados |
+| publication_events | Eventos e revisões de publicação |
+| audit_logs | Registro de ações |
+| schema_migrations | Controle de migração |
+| system_controls | Controles e travas |
+| role_permissions | Permissões registradas |
+| student_import_runs | Histórico de importação de estudantes |
+| identity_counters | Sequências de identidade legadas |
+
+[EVOLUÇÃO] PostgreSQL como única base oficial do ambiente institucional, com migrações versionadas, constraints, índices por contexto acadêmico, pool de conexões, transações, retenção e restauração de backup. O banco atual em demonstração é SQLite; a existência de scripts PostgreSQL antigos não prova funcionamento integrado. Uma migração precisa preservar a semântica e os identificadores históricos com plano de validação e rollback.
+
+## 15. API HTTP: superfície funcional identificada
+
+A lista abaixo descreve rotas presentes no projeto; implementar autorização, contratos de entrada/saída, códigos de erro, paginação e testes de integração para cada família. Não interpretar rotas presentes como certificação de produção.
+
+| Família | Exemplos de rotas presentes |
+| --- | --- |
+| Autenticação | POST /api/login; POST /api/logout; GET /api/me; GET /api/health |
+| Admin — cadastros | /api/admin/users; /api/admin/courses; /api/admin/disciplines; /api/admin/students |
+| Admin — vínculos | /api/admin/assignments; /api/admin/enrollments; /api/admin/enrollments/period |
+| Admin — operação | /api/admin/assessments; /api/admin/controls; /api/admin/audit; /api/admin/health |
+| Admin — importação | /api/admin/student-import/preview; /review; /confirm; /:id/report |
+| Professor — avaliação | GET /api/assessments; GET /api/assessment/:id; PUT /headers; /question-config; /scores |
+| Professor — publicação | POST /api/assessment/:id/publish; /send-one; /send-all; GET /audit-history |
+| Indicadores/planilhas | GET /api/assessment/:id/stats; POST /import; /import/confirm; GET /export |
+| Estudante | GET /api/student/assessments; GET /api/student/assessment/:id |
+| Evolução | GET /api/evolution (atual: ADMIN e PROFESSOR) |
+
+## 16. Requisitos não funcionais de produção
+
+### 16.1 Segurança e privacidade
+
+- TLS/HTTPS, cookies seguros, proteção contra força bruta e CSRF, segregação de funções, controle por recurso, tratamento de sessão e dados pessoais conforme LGPD.
+
+- Segredos fora do código e do GitHub; usar 1Password para equipe e secrets do deployment; não incluir credenciais de demonstração.
+
+- Não mostrar stack traces ou dados de outros estudantes aos usuários finais; sanitizar logs e downloads.
+
+- Auditar criação/edição/publicação/exclusão, alterações de permissão e logins sensíveis.
+
+### 16.2 Confiabilidade
+
+- Transações ACID nas importações e publicações; idempotência; recuperação de falhas sem estado parcialmente publicado.
+
+- Backups automáticos, armazenados fora do servidor, com testes regulares de restauração.
+
+- Monitoramento de disponibilidade, métricas, alertas de erro e espaço em disco.
+
+- Migrações reversíveis quando possível e procedimentos documentados de rollback.
+
+### 16.3 Desempenho e concorrência
+
+- Suportar uso simultâneo de professores, estudantes e administradores; carga exata será definida em conjunto com a instituição.
+
+- Não afirmar que o protótipo atual suporta 335 acessos simultâneos: 335 é quantidade de contas do ZIP.
+
+- Dimensionar Hostinger KVM 8 com testes de carga reais; definir metas de latência, p95, disponibilidade e usuários concorrentes antes do aceite.
+
+### 16.4 Engenharia e entrega
+
+- Repositório GitHub privado, branches main/develop, PRs, revisão, lint, testes CI, análise de dependências e releases versionados.
+
+- Ambientes DEV / HOMOLOGAÇÃO / PRODUÇÃO isolados; banco distinto em cada ambiente.
+
+- Docker/Compose ou serviço equivalente com configuração reproduzível; scripts documentados de implantação.
+
+- Documentação de instalação, operação, mapa de dados, manual do professor/estudante/admin, contratos de API e registro de decisões.
+
+## 17. Ferramentas contratadas/aprovadas: distribuição de responsabilidades
+
+| Ferramenta | Uso no desenvolvimento institucional |
+| --- | --- |
+| GitHub Team | Código privado, branches, pull requests, CI e histórico. |
+| 1Password Business | Cofre de acessos e segredos da equipe. |
+| Hostinger KVM 8 | Servidor de homologação/produção conforme dimensionamento. |
+| Figma Professional | Protótipos e biblioteca de componentes visuais. |
+| Claude Team Premium | Assistência ao desenvolvimento e revisão; não é substituto de QA. |
+| Node.js + TypeScript | [RECOMENDAÇÃO] Backend mantido no ecossistema do protótipo. |
+| PostgreSQL | [EVOLUÇÃO] Banco institucional central. |
+| HTML/CSS/JavaScript | Pode preservar estilo atual ou organizar em frontend moderno sem ruptura funcional. |
+
+## 18. Testes de aceitação obrigatórios
+
+AT-01  ADMIN cria professor, estudante, curso, disciplina, vínculo e matrícula; duplicidades são rejeitadas de maneira clara.
+
+AT-02  PROFESSOR não vê nem altera avaliação de outro professor, mesmo alterando IDs manualmente na URL/API.
+
+AT-03  ALUNO não vê notas ou identificação de colega, mesmo manipulando IDs e parâmetros.
+
+AT-04  Uma avaliação A1/A2/A3 nasce no contexto correto e lista somente estudantes matriculados.
+
+AT-05  Rascunho de notas pode ser salvo e editado, mas não aparece no dashboard do aluno.
+
+AT-06  Questão com nota preenchida e sem área/máximo válido bloqueia publicação com mensagem específica.
+
+AT-07  Publicação gera snapshot imutável de metadados históricos, com evento e data; alterações posteriores exigem republicação.
+
+AT-08  Editores concorrentes recebem conflito de revisão, sem perda silenciosa de notas.
+
+AT-09  OSCE por estações não é somado duas vezes; q10 legado não interfere na fórmula atual.
+
+AT-10  Importação Excel associa pela matrícula; não cria/corrige notas silenciosamente de alunos errados.
+
+AT-11  Importação com erro não deixa dados parcialmente confirmados.
+
+AT-12  Gráficos usam máximos configurados para converter nota em percentual; não inventam porcentagens sem denominador.
+
+AT-13  Médias, mediana e desvio-padrão são compatíveis com o cálculo do backend para uma amostra controlada.
+
+AT-14  Exportação contém somente alunos da turma/avaliação autorizada e não inclui segredos.
+
+AT-15  Professor encerra avaliação somente após publicar; reabertura depende de autorização administrativa.
+
+AT-16  Status inativo de usuário bloqueia novas sessões e invalida sessões anteriores.
+
+AT-17  Backups completos são restauráveis em ambiente limpo; execução do plano documentada.
+
+AT-18  Telas responsivas, rótulos, leitura de gráficos e fluxo teclado funcionam no conjunto de navegadores homologado.
+
+AT-19  Todas as modificações da reunião de 06/11 são rastreadas como entregues, pendentes ou não implementadas.
+
+AT-20  Instalação em servidor novo é reproduzível a partir do repositório e de segredos provisionados separadamente.
+
+## 19. Entregáveis que Claude deve produzir
+
+1. Repositório completo com código-fonte original e instruções de execução.
+
+1. Arquitetura e diagramas lógicos de autenticação, turmas, avaliações e publicação.
+
+1. Modelo de dados PostgreSQL com migrações e seeds inteiramente fictícios.
+
+1. Frontend responsivo para ADMIN, PROFESSOR, ALUNO; módulos “em desenvolvimento” claramente sinalizados se não implementados.
+
+1. API REST documentada, autorização robusta e testes de contrato.
+
+1. Cálculos de nota testados e dashboards com gráficos operacionais.
+
+1. Importação/exportação Excel com prévia e confirmação.
+
+1. Auditoria, backups e procedimentos de restauração.
+
+1. CI, testes unitários, integração, segurança e smoke tests.
+
+1. Checklist de comparabilidade indicando para cada requisito: implementado, parcialmente implementado, pendente, não implementado; com evidência e caminho de código.
+
+1. Demonstração com base fictícia independente e dados de teste reproduzíveis.
+
+1. Manual do administrador, professor e estudante e guia de implantação Hostinger.
+
+## 20. Instrução final de comparação entre as duas implementações
+
+A comparação não deve privilegiar aparência ou quantidade de telas: medir funcionamento real, integridade acadêmica, precisão de cálculos, segurança, controle de publicação, importação Excel, usabilidade, documentação, desempenho e facilidade de implantação. Não afirmar equivalência sem executar testes e coletar evidência. Relatar explicitamente quaisquer divergências entre o sistema novo, a fórmula do protótipo, as solicitações de 06/11 e as regras ainda não aprovadas.
+
+## 21. Ambiguidades que não devem ser preenchidas por suposição
+
+- Número total de alunos da Suprema e meta de usuários simultâneos: não informado; configurar e validar com TI.
+
+- Forma exata do gabarito mínimo: pendente de definição.
+
+- Expansão de colunas de múltipla escolha: pendente de definição.
+
+- Ponto de corte, percentual de 60% e limiar de aprovação: confirmação acadêmica necessária antes de aplicar como regra decisória.
+
+- Total de articulação interdisciplinar e pesos das modalidades: fórmula a homologar.
+
+- OSCE como módulo independente de interface versus componente de nota na A1/A2/A3: módulos distintos, escopo independente ainda em desenvolvimento.
+
+- API e governança da integração TOTVS RM: dependerá da instituição e contratos disponíveis.
+
+- Número máximo de questões/estações por avaliação e regras A3 de substituição: não estabelecer sem especificação acadêmica.
+
+- Layout exato “canto superior direito” indicado na reunião: depende da referência visual escolhida.
+
+## 22. Fontes utilizadas e rastreabilidade
+
+- Pacote ZIP: AVALIACAO_SUPREMA_3_PERIODO_DEMO_PRONTO.zip — arquivos server.js, public/index.html, public/*.js, lib/core/*.js, admin_routes.js, package.json e banco SQLite da demonstração.
+
+- Reunião 06-11 software avaliação.docx — solicitações dos perfis docente e estudante.
+
+- Decisões registradas no projeto: TOTVS RM como sistema principal, Avaliação Suprema como complemento; GitHub, 1Password, Hostinger, Figma e Claude aprovados; duas funcionalidades explicitamente pendentes.
+
+- Todos os números de registros do item 2 foram obtidos por contagem das tabelas presentes no SQLite do ZIP de referência, sem reproduzir dados pessoais.
+
+FIM DA ESPECIFICAÇÃO — utilizar este documento como contrato funcional de comparação, com validações institucionais antes do uso real.
